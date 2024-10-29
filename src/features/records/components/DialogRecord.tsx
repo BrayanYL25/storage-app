@@ -2,40 +2,19 @@ import { Label } from '@/components/Label'
 import { useDialog } from '../store/dialog'
 import { Input } from '@/components/Input'
 import { CloseIcon } from '@/components/Icons'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/Select'
+
 import { DatePicker } from '@/components/DatePicker'
 import { FormEvent, useState } from 'react'
+import SearchInput from './SearchInput'
+// import { Product } from 'src/types'
 
 export default function DialogRecord() {
   const { closeDialog } = useDialog()
   const [date, setDate] = useState<Date | undefined>(undefined)
-  const data = [
-    {
-      value: 1,
-      label: 'Unidad'
-    },
-    {
-      value: 2,
-      label: 'Litro'
-    },
-    {
-      value: 3,
-      label: 'Kilogramos'
-    }
-  ]
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
   }
-
-  const handleTyping = () => {}
-
   return (
     <div className="fixed z-10 top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-85">
       <form
@@ -52,63 +31,22 @@ export default function DialogRecord() {
           </button>
         </section>
 
-        <section className="relative flex flex-col">
-          <Label
-            htmlFor="product"
-            className="text-[#003249] text-base font-semibold"
-          >
-            Producto
-          </Label>
-          <input
-            placeholder="Escribe..."
-            id="product"
-            name="product"
-            type="text"
-            onChange={handleTyping}
-            required
-          />
-          <div className="absolute z-10 w-full top-[100%] h-14 bg-white rounded-b-lg border-[1px] border-black"></div>
-        </section>
+        <SearchInput />
 
-        <section className="grid grid-cols-2 gap-4">
-          <div>
-            <Label
-              htmlFor="quantity"
-              className="text-[#003249] text-base font-semibold"
-            >
-              Unidad de Medida
-            </Label>
-            <Select>
-              <SelectTrigger id="group">
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent>
-                {data.map((item, index) => (
-                  <SelectItem key={index} value={item.value.toString()}>
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div>
-            <Label
-              htmlFor="quantity"
-              className="text-[#003249] text-base font-semibold"
-            >
-              Cantidad
-            </Label>
-            <Input
-              placeholder="Escribe..."
-              id="quantity"
-              name="quantity"
-              type="number"
-              className="mb-3"
-              required
-            />
-          </div>
-        </section>
+        <Label
+          htmlFor="quantity"
+          className="text-[#003249] text-base font-semibold"
+        >
+          Cantidad
+        </Label>
+        <Input
+          placeholder="Escribe..."
+          id="quantity"
+          name="quantity"
+          type="number"
+          className="mb-3"
+          required
+        />
 
         <Label
           htmlFor="date"

@@ -16,6 +16,13 @@ export interface NewRecord {
   record_date: string
 }
 
+export interface Product {
+  id: number
+  name?: string
+  stock?: number
+  unitId?: number
+}
+
 interface DialogState {
   stateDialog: boolean
   closeDialog: () => void

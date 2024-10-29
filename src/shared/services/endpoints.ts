@@ -2,6 +2,8 @@ const login = 'http://localhost:3000/api/user/login'
 const checkPermission = 'http://localhost:3000/api/user/check'
 const logoutEndpoint = 'http://localhost:3000/api/user/logout'
 
+const productsByName = 'http://localhost:3000/api/product/'
+
 // records
 const expensesEndpoint = 'http://localhost:3000/api/record/expenses'
 const incomesEndpoint = 'http://localhost:3000/api/record/incomes'
@@ -15,5 +17,6 @@ export {
   expensesEndpoint,
   incomesEndpoint,
   allRecordsEndpoint,
-  createRecordEndpoint
+  createRecordEndpoint,
+  productsByName
 }
