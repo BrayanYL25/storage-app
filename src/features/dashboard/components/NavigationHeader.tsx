@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover'
+import { SettingsIcon } from '@/components/Icons'
+import LogoutButton from './LogoutButton'
+import AccountButton from './AccountButton'
 
 type RouteLink = {
   route: string
@@ -20,13 +24,13 @@ const allRoutes: RouteLink[] = [
     name: 'Entradas',
     style: '',
     title: 'Ingresos | Mi inventario'
-  },
-  {
-    route: 'settings',
-    name: 'Ajustes',
-    style: '',
-    title: 'Ajustes | Mi inventario'
   }
+  // {
+  //   route: 'settings',
+  //   name: 'Ajustes',
+  //   style: '',
+  //   title: 'Ajustes | Mi inventario'
+  // }
 ]
 
 export default function NavigationHeader() {
@@ -55,6 +59,24 @@ export default function NavigationHeader() {
       <header className="w-full pt-7 px-9 border-b-[1px] border-light-gray">
         <section className="mb-10 flex justify-between">
           <h1 className="text-deep-blue text-3xl font-bold">Dashboard</h1>
+
+          <div className="flex justify-center">
+            <Popover>
+              <PopoverTrigger asChild>
+                {/* <Button variant="primary">Open</Button> */}
+                <button type="button" aria-label="open settings">
+                  <SettingsIcon />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent className="p-0 mr-4">
+                <div className="flex flex-col">
+                  <AccountButton />
+                  <div className="w-[90%] mx-auto border-b-[1px] border-light-gray" />
+                  <LogoutButton />
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
         </section>
 
         <nav className="flex gap-4">
