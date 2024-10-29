@@ -1,9 +1,8 @@
-import { expensesEndpoint } from '@/services/endpoints'
 import { Record } from 'src/types'
 
-export default async function getExpenses() {
+export default async function getRecords({ endpoint }: { endpoint: string }) {
   try {
-    const response = await fetch(expensesEndpoint, {
+    const response = await fetch(endpoint, {
       credentials: 'include'
     })
 

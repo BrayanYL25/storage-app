@@ -10,11 +10,17 @@ import {
 } from '@/components/Table'
 import { Record } from 'src/types'
 
-export function Records({ data }: { data: Record[] | undefined }) {
+export function Records({
+  data,
+  title
+}: {
+  data: Record[] | undefined
+  title: string
+}) {
   return (
     <section className="p-6 border-[1px] border-light-gray rounded-xl my-8">
       <div>
-        <h3 className="font-bold text-lg text-deep-blue">Últimas Salidas</h3>
+        <h3 className="font-bold text-lg text-deep-blue">{title}</h3>
       </div>
       <TableRoot className="mt-8">
         <Table>

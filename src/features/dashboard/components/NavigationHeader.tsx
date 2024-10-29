@@ -53,7 +53,9 @@ export default function NavigationHeader() {
   return (
     <>
       <header className="w-full pt-7 px-9 border-b-[1px] border-light-gray">
-        <h1 className="text-deep-blue text-3xl font-bold mb-6">Dashboard</h1>
+        <section className="mb-10 flex justify-between">
+          <h1 className="text-deep-blue text-3xl font-bold">Dashboard</h1>
+        </section>
 
         <nav className="flex gap-4">
           {routes.map(({ route, name, style }, index) => (

@@ -27,6 +27,7 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       '@typescript-eslint/no-explicit-any': 'off',
+      "react-hooks/exhaustive-deps": 'off',
       semi: ['error', 'never'],
       'prettier/prettier': [
         'error',
