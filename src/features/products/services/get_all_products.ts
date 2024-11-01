@@ -7,7 +7,7 @@ export default async function getAllProducts() {
       credentials: 'include'
     })
     const products = await response.json()
-    const mappedProducts = products.map(
+    const mappedProducts: Product[] = products.map(
       (product: any): Product => ({
         id: product.productId,
         name: product.productName,

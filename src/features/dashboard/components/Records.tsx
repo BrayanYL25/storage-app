@@ -36,9 +36,9 @@ export function Records({
             </TableRow>
           </TableHead>
           <TableBody>
-            {data?.map((item) => (
+            {data?.map((item, index) => (
               <TableRow key={item.id}>
-                <TableCell>{item.id}</TableCell>
+                <TableCell>{index + 1}</TableCell>
                 <TableCell>{item.product}</TableCell>
                 <TableCell>{item.quantity}</TableCell>
                 <TableCell>
@@ -50,7 +50,9 @@ export function Records({
                 <TableCell>
                   <Badge variant="default">{item.email}</Badge>
                 </TableCell>
-                <TableCell className="text-right">{item.date}</TableCell>
+                <TableCell className="text-right font-semibold">
+                  {item.date}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
