@@ -6,14 +6,33 @@ import { CloseIcon } from '@/components/Icons'
 import { DatePicker } from '@/components/DatePicker'
 import { FormEvent, useState } from 'react'
 import SearchInput from './SearchInput'
-// import { Product } from 'src/types'
+import createRecord from '../services/create_record'
+import { record_type_id } from 'src/types'
+import { format } from 'date-fns'
 
-export default function DialogRecord() {
+export default function DialogRecord({
+  typeRecord
+}: {
+  typeRecord: record_type_id
+}) {
   const { closeDialog } = useDialog()
   const [date, setDate] = useState<Date | undefined>(undefined)
+  const [productId, setProductId] = useState<number | undefined>()
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+
+    const user = JSON.parse(localStorage.getItem('user') as string)
+    if (productId !== undefined && user.id !== undefined) {
+      createRecord({
+        product_id: productId,
+        user_id: Number(user.id),
+        record_quantity: Number(formData.get('quantity')),
+        record_date: format(date?.toString() ?? '', 'yyyy-MM-dd'),
+        record_type_id: typeRecord
+      })
+    }
   }
   return (
     <div className="fixed z-10 top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-85">
@@ -31,7 +50,7 @@ export default function DialogRecord() {
           </button>
         </section>
 
-        <SearchInput />
+        <SearchInput setId={setProductId} />
 
         <Label
           htmlFor="quantity"

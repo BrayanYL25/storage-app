@@ -1,7 +1,7 @@
-import { NewRecord } from 'src/types'
+import { RecordRequest } from 'src/types'
 import { createRecordEndpoint } from '@/services/endpoints'
 
-export default async function createRecord(record: NewRecord) {
+export default async function createRecord(record: RecordRequest) {
   try {
     const response = await fetch(createRecordEndpoint, {
       method: 'POST',
@@ -18,9 +18,13 @@ export default async function createRecord(record: NewRecord) {
       })
     })
 
-    const recordCreated = response.json()
+    if (!response.ok) {
+      throw new Error('El error esta en la api')
+    }
+    const recordCreated = await response.json()
 
-    return recordCreated
+    // return recordCreated
+    console.log(recordCreated)
   } catch (e) {
     console.error(e)
   }

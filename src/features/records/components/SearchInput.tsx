@@ -1,9 +1,14 @@
 import { Label } from '@/components/Label'
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, Dispatch, useEffect, useState } from 'react'
 import getProducts from '../../products/services/get_products_by_name.ts'
 import useDebounce from '../hooks/useDebounce.tsx'
+import { Product } from 'src/types'
 
-export default function SearchInput() {
+export default function SearchInput({
+  setId
+}: {
+  setId: Dispatch<React.SetStateAction<number | undefined>>
+}) {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [productList, setProductList] = useState<any>()
   const [focused, setFocused] = useState<boolean>(false)
@@ -14,12 +19,14 @@ export default function SearchInput() {
       getProducts(debounceProduct).then((products) => {
         setProductList(
           products
-            .map((pro: any) => ({
-              id: pro.product_id,
-              name: pro.product_name,
-              stock: pro.product_stock,
-              unit: pro.volume_id
-            }))
+            .map(
+              (pro: any): Product => ({
+                id: pro.product_id,
+                name: pro.product_name,
+                stock: pro.product_stock,
+                unitId: pro.volume_id
+              })
+            )
             .slice(0, 5)
         )
       })
@@ -29,8 +36,9 @@ export default function SearchInput() {
   const handleTyping = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
   }
-  const handleSelect = (productName: string) => {
+  const handleSelect = (productName: string, productId: number) => {
     setSearchTerm(productName)
+    setId(productId)
     setFocused(false)
   }
   return (
@@ -46,24 +54,26 @@ export default function SearchInput() {
         id="product"
         name="product"
         type="text"
-        value={searchTerm}
         onChange={handleTyping}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
+        value={searchTerm}
         className="rounded-lg border-light-gray"
         required
       />
       {focused && productList?.length > 0 && (
         <div className="absolute overflow-hidden z-10 w-full top-[105%] h-auto bg-white rounded-lg border-[1px] border-light-gray">
           <ul>
-            {productList?.map((p: any, index: number) => (
+            {productList?.map((product: Product, index: number) => (
               <li key={index}>
                 <button
                   type="button"
                   className="px-2 py-2"
-                  onClick={() => handleSelect(p.name)}
+                  onMouseDown={() =>
+                    handleSelect(product.name ?? '', product.id)
+                  }
                 >
-                  {p.name}
+                  {product.name}
                 </button>
               </li>
             ))}

@@ -9,7 +9,7 @@ const productsEndpoint = 'http://localhost:3000/api/product'
 const expensesEndpoint = 'http://localhost:3000/api/record/expenses'
 const incomesEndpoint = 'http://localhost:3000/api/record/incomes'
 const allRecordsEndpoint = 'http://localhost:3000/api/record/all'
-const createRecordEndpoint = 'http://localhost:3000/api/record/'
+const createRecordEndpoint = 'http://localhost:3000/api/record'
 
 export {
   login,

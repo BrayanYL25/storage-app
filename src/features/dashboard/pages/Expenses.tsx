@@ -13,11 +13,12 @@ export default function Expenses() {
     closeDialog()
   }, [])
 
+  //  1 es Ingreso, 2 es Salidas
   return (
     <main className="px-9 pt-6">
       <Controls />
       <Records data={records} title={'Últimas Salidas'} />
-      {stateDialog && <DialogRecord />}
+      {stateDialog && <DialogRecord typeRecord={2} />}
     </main>
   )
 }

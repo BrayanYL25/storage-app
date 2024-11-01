@@ -8,10 +8,12 @@ export interface Record {
   date: string
 }
 
-export interface NewRecord {
+type record_type_id = 1 | 2
+
+export interface RecordRequest {
   product_id: number
   user_id: number
-  record_type_id: number
+  record_type_id: record_type_id
   record_quantity: number
   record_date: string
 }
@@ -22,6 +24,10 @@ export interface Product {
   stock?: number
   unitId?: number
   unitName?: string
+}
+
+export type Errors = (params: { name: string }) => {
+  new (message: string): Error
 }
 
 interface DialogState {
