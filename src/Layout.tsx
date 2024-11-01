@@ -7,6 +7,7 @@ import './index.css'
 import Dashboard from './features/dashboard/pages/Dashboard'
 import Expenses from './features/dashboard/pages/Expenses'
 import Incomes from './features/dashboard/pages/Incomes'
+import Products from './features/dashboard/pages/Products'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: 'incomes',
         element: <Incomes />
+      },
+      {
+        path: 'products',
+        element: <Products />
       }
     ]
   }

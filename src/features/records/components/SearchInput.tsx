@@ -1,6 +1,6 @@
 import { Label } from '@/components/Label'
 import { ChangeEvent, useEffect, useState } from 'react'
-import getProducts from '../../products/services/get_products.ts'
+import getProducts from '../../products/services/get_products_by_name.ts'
 import useDebounce from '../hooks/useDebounce.tsx'
 
 export default function SearchInput() {

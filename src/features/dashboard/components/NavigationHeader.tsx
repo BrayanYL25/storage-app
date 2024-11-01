@@ -24,13 +24,13 @@ const allRoutes: RouteLink[] = [
     name: 'Entradas',
     style: '',
     title: 'Ingresos | Mi inventario'
+  },
+  {
+    route: 'products',
+    name: 'Productos',
+    style: '',
+    title: 'Productos | Mi inventario'
   }
-  // {
-  //   route: 'settings',
-  //   name: 'Ajustes',
-  //   style: '',
-  //   title: 'Ajustes | Mi inventario'
-  // }
 ]
 
 export default function NavigationHeader() {

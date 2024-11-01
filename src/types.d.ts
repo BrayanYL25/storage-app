@@ -21,6 +21,7 @@ export interface Product {
   name?: string
   stock?: number
   unitId?: number
+  unitName?: string
 }
 
 interface DialogState {
