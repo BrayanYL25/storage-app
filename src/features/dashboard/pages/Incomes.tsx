@@ -1,15 +1,16 @@
+import useRecordsStore from '../../records/store/useRecordsStore.ts'
 import DialogRecord from '../../records/components/DialogRecord.tsx'
 import { useDialog } from '../../records/store/dialog.ts'
 import Controls from '../components/Controls'
 import { Records } from '../components/Records'
-import useRecords from '../hooks/useRecords'
 import { useEffect } from 'react'
 
 export default function Incomes() {
-  const { records } = useRecords({ type: 'incomesEndpoint' })
+  const { records, fetchRecords } = useRecordsStore()
   const { stateDialog, closeDialog } = useDialog()
 
   useEffect(() => {
+    fetchRecords('incomesEndpoint')
     closeDialog()
   }, [])
   return (

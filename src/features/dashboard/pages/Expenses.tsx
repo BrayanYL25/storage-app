@@ -2,14 +2,16 @@ import { useEffect } from 'react'
 import Controls from '../components/Controls'
 import DialogRecord from '../../records/components/DialogRecord'
 import { Records } from '../components/Records'
-import useRecords from '../hooks/useRecords'
 import { useDialog } from '../../records/store/dialog'
+import useRecordsStore from '../../records/store/useRecordsStore.ts'
 
 export default function Expenses() {
-  const { records } = useRecords({ type: 'expensesEndpoint' })
+  const { records, fetchRecords } = useRecordsStore()
   const { stateDialog, closeDialog } = useDialog()
 
   useEffect(() => {
+    fetchRecords('expensesEndpoint')
+
     closeDialog()
   }, [])
 

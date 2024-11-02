@@ -10,7 +10,7 @@ import {
   SelectValue
 } from '@/components/Select.tsx'
 
-export default function SearchInput({
+export default function ProductSelect({
   setId
 }: {
   setId: Dispatch<React.SetStateAction<number | undefined>>
@@ -21,25 +21,24 @@ export default function SearchInput({
     getAllProducts().then(setProductList)
   }, [])
 
+  const handleSelect = (value: string) => {
+    setId(Number(value))
+  }
   return (
-    <>
-      <Label>Producto</Label>
-      <Select>
+    <div className="mb-3">
+      <Label className="text-[#003249] text-base font-semibold">Producto</Label>
+      <Select onValueChange={handleSelect}>
         <SelectTrigger>
           <SelectValue placeholder="Select" />
         </SelectTrigger>
         <SelectContent>
           {productList?.map((item) => (
-            <SelectItem
-              key={item.id}
-              value={item?.id.toString()}
-              onSelect={() => setId(item.id)}
-            >
+            <SelectItem key={item.id} value={item?.id.toString()}>
               {item.name}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
-    </>
+    </div>
   )
 }
