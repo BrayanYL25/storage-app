@@ -27,7 +27,7 @@ export default function DialogRecord({
   typeRecord: record_type_id
   setToast: Dispatch<React.SetStateAction<ToastProps | undefined>>
 }) {
-  const { closeDialog } = useDialog()
+  const { closeRecordDialog: closeDialog } = useDialog()
   const { fetchRecords } = useRecordsStore()
   const [date, setDate] = useState<Date | undefined>(undefined)
   const [product, setProduct] = useState<Product | undefined>()

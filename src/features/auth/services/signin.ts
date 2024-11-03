@@ -1,5 +1,5 @@
 import { SignInRequestFailed } from '@/lib/errorFactory.ts'
-import { login } from '@/services/endpoints.ts'
+import { AUTH_ENDPOINTS } from '@/services/endpoints.ts'
 
 export default async function signin({
   email,
@@ -8,7 +8,7 @@ export default async function signin({
   email: string
   password: string
 }) {
-  const response = await fetch(login, {
+  const response = await fetch(AUTH_ENDPOINTS.LOGIN, {
     method: 'POST',
     credentials: 'include',
     headers: {

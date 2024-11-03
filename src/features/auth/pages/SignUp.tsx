@@ -66,7 +66,7 @@ export default function SignUp() {
           Enviar
         </button>
         <Link
-          to="/signin"
+          to="/"
           className="text-xs text-center my-1 mb-2 text-[#007EA7] hover:underline"
         >
           ¿Ya tienes cuenta? Inicia sesión

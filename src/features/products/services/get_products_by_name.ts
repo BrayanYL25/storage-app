@@ -1,10 +1,10 @@
 import { ProductsError } from '@/lib/errorFactory'
-import { productsByName } from '@/services/endpoints'
+import { PRODUCT_ENDPOINTS } from '@/services/endpoints'
 import { Product } from 'src/types'
 
 export default async function getProducts(name: string): Promise<Product[]> {
   try {
-    const response = await fetch(`${productsByName}${name}`, {
+    const response = await fetch(`${PRODUCT_ENDPOINTS.PRODUCT}/${name}`, {
       credentials: 'include'
     })
 

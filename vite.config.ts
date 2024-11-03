@@ -9,6 +9,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: [{ find: '@', replacement: resolve(__dirname, 'src/shared') }]
+    alias: [
+      { find: '@', replacement: resolve(__dirname, 'src/shared') },
+      { find: '#', replacement: resolve(__dirname, 'src/features') }
+    ]
   }
 })

@@ -2,9 +2,9 @@ import { create } from 'zustand'
 import { RecordsState } from 'src/types'
 import { type viewRecord } from 'src/types'
 import {
-  expensesEndpoint,
-  incomesEndpoint,
-  allRecordsEndpoint
+  EXPENSES_ENPOINTS,
+  INCOMES_ENDPOINTS,
+  RECORD_ENDPOINTS
 } from '@/services/endpoints'
 import getRecords from '../services/get_records.ts'
 
@@ -16,11 +16,11 @@ const useRecordsStore = create<RecordsState>((set) => ({
     set({ loading: true, error: null })
     let endpoint: string
     if (type === 'expensesEndpoint') {
-      endpoint = expensesEndpoint
+      endpoint = EXPENSES_ENPOINTS.RECORD
     } else if (type === 'incomesEndpoint') {
-      endpoint = incomesEndpoint
+      endpoint = INCOMES_ENDPOINTS.RECORD
     } else {
-      endpoint = allRecordsEndpoint
+      endpoint = RECORD_ENDPOINTS.ALL
     }
 
     try {

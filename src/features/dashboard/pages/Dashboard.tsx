@@ -2,13 +2,13 @@ import { Navigate, Outlet } from 'react-router-dom'
 import NavigationHeader from '../components/NavigationHeader'
 import { Suspense, useEffect, useState } from 'react'
 import { AccessDenied } from '@/lib/errorFactory'
-import { checkPermission } from '@/services/endpoints'
+import { AUTH_ENDPOINTS } from '@/services/endpoints'
 
 export default function Dashboard() {
   const [isAuthenticated, setAuthentication] = useState(true)
 
   useEffect(() => {
-    fetch(checkPermission, {
+    fetch(AUTH_ENDPOINTS.CHECK, {
       credentials: 'include'
     })
       .then((response) => {

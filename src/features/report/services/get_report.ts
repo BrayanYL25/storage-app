@@ -9,7 +9,7 @@ export default async function getReport({
 }) {
   try {
     const response = await fetch(
-      `${EXPENSES_ENPOINTS.REPORT_ENDPOINT}?month=${month}&year=${year}`,
+      `${EXPENSES_ENPOINTS.REPORT}?month=${month}&year=${year}`,
       {
         credentials: 'include'
       }

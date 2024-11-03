@@ -4,8 +4,8 @@ import CreateReportButton from './CreateReportButton'
 import NewRecordButton from './NewRecordButton'
 
 export default function Controls() {
-  const { openDialog: openCreateRecordDialog } = useDialog()
-  const { openDialog: openCreateReportDialog } = useReportStore()
+  const { openRecordDialog: openCreateRecordDialog } = useDialog()
+  const { openRecordDialog: openCreateReportDialog } = useReportStore()
 
   return (
     <section className="flex gap-3">

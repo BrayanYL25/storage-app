@@ -1,33 +1,33 @@
 const EXPENSES_ENPOINTS = {
-  REPORT_ENDPOINT: 'http://localhost:3000/api/report/expenses',
-  RECORD_ENDPOINT: 'http://localhost:3000/api/record/expenses'
+  REPORT: 'http://localhost:3000/api/report/expenses',
+  RECORD: 'http://localhost:3000/api/record/expenses'
 }
 
-const login = 'http://localhost:3000/api/user/login'
-const checkPermission = 'http://localhost:3000/api/user/check'
-const logoutEndpoint = 'http://localhost:3000/api/user/logout'
+const INCOMES_ENDPOINTS = {
+  REPORT: 'http://localhost:3000/api/report/expenses',
+  RECORD: 'http://localhost:3000/api/record/incomes'
+}
 
-const productsByName = 'http://localhost:3000/api/product/'
-const productsEndpoint = 'http://localhost:3000/api/product'
+const AUTH_ENDPOINTS = {
+  LOGIN: 'http://localhost:3000/api/user/login',
+  LOGOUT: 'http://localhost:3000/api/user/logout',
+  CHECK: 'http://localhost:3000/api/user/check',
+  REFRESH: 'http://localhost:3000/api/user/refresh'
+}
 
-// records
-const expensesEndpoint = 'http://localhost:3000/api/record/expenses'
-const incomesEndpoint = 'http://localhost:3000/api/record/incomes'
-const allRecordsEndpoint = 'http://localhost:3000/api/record/all'
-const createRecordEndpoint = 'http://localhost:3000/api/record'
+const PRODUCT_ENDPOINTS = {
+  PRODUCT: 'http://localhost:3000/api/product'
+}
 
-const INCOMES_REPORT_ENDPOINT = 'http://localhost:3000/api/report/expenses'
+const RECORD_ENDPOINTS = {
+  ALL: 'http://localhost:3000/api/record/all',
+  RECORD: 'http://localhost:3000/api/record'
+}
 
 export {
-  login,
-  logoutEndpoint,
-  checkPermission,
-  expensesEndpoint,
-  incomesEndpoint,
-  allRecordsEndpoint,
-  createRecordEndpoint,
-  productsByName,
-  productsEndpoint,
+  PRODUCT_ENDPOINTS,
+  RECORD_ENDPOINTS,
+  AUTH_ENDPOINTS,
   EXPENSES_ENPOINTS,
-  INCOMES_REPORT_ENDPOINT
+  INCOMES_ENDPOINTS
 }

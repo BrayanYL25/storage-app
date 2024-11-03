@@ -1,9 +1,9 @@
-import { productsEndpoint } from '@/services/endpoints'
+import { PRODUCT_ENDPOINTS } from '@/services/endpoints'
 import { Product } from '../../../types.d'
 
 export default async function getAllProducts() {
   try {
-    const response = await fetch(`${productsEndpoint}`, {
+    const response = await fetch(PRODUCT_ENDPOINTS.PRODUCT, {
       credentials: 'include'
     })
     const products = await response.json()

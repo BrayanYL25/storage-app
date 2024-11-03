@@ -1,9 +1,9 @@
 import { RecordRequest } from 'src/types'
-import { createRecordEndpoint } from '@/services/endpoints'
+import { RECORD_ENDPOINTS } from '@/services/endpoints'
 
 export default async function createRecord(record: RecordRequest) {
   try {
-    const response = await fetch(createRecordEndpoint, {
+    const response = await fetch(RECORD_ENDPOINTS.RECORD, {
       method: 'POST',
       credentials: 'include',
       headers: {

@@ -1,9 +1,9 @@
 import { LogOutError } from '@/lib/errorFactory'
-import { logoutEndpoint } from '@/services/endpoints'
+import { AUTH_ENDPOINTS } from '@/services/endpoints'
 
 export default async function logout() {
   localStorage.removeItem('user')
-  const response = await fetch(logoutEndpoint, {
+  const response = await fetch(AUTH_ENDPOINTS.LOGOUT, {
     method: 'POST',
     credentials: 'include'
   })

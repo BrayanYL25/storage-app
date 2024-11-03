@@ -5,7 +5,7 @@ import DownloadReport from './DownloadReport.tsx'
 import Overlay from '@/components/Overlay.tsx'
 
 export default function ReportDialog() {
-  const { closeDialog } = useReportStore()
+  const { closeRecordDialog: closeDialog } = useReportStore()
 
   return (
     <Overlay>

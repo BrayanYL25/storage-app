@@ -23,7 +23,8 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/shared/*"]
+      "@/*": ["src/shared/*"],
+      "#/*": ["src/features/*"]
     }
   },
   "include": ["src"]

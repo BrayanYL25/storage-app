@@ -50,7 +50,6 @@ type record_type_id = 1 | 2
 
 type viewRecord = 'expensesEndpoint' | 'incomesEndpoint' | 'all'
 
-//  Store para crear registros - Zustand
 export interface RecordsState {
   records: Record[] | undefined
   loading: boolean
@@ -58,9 +57,14 @@ export interface RecordsState {
   fetchRecords: (type: viewRecord) => Promise<void>
 }
 
-//  Store para crear cuadro de dialogo - Zustand
-interface DialogState {
-  stateDialog: boolean
-  closeDialog: () => void
-  openDialog: () => void
+export interface RecordDialog {
+  stateRecordDialog: boolean
+  closeRecordDialog: () => void
+  openRecordDialog: () => void
+}
+
+export interface ReportDialog {
+  stateReportDialog: boolean
+  closeReportDialog: () => void
+  openReportDialog: () => void
 }
