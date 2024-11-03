@@ -2,12 +2,13 @@ import { CloseIcon } from '@/components/Icons'
 import useReportStore from '../../dashboard/store/useReportStore.ts'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/Tab.tsx'
 import DownloadReport from './DownloadReport.tsx'
+import Overlay from '@/components/Overlay.tsx'
 
 export default function ReportDialog() {
   const { closeDialog } = useReportStore()
 
   return (
-    <div className="fixed z-10 top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-85">
+    <Overlay>
       <Tabs
         defaultValue="tab1"
         className="w-1/2 lg:w-1/3 bg-white p-6 rounded-lg"
@@ -42,6 +43,6 @@ export default function ReportDialog() {
           </TabsContent>
         </div>
       </Tabs>
-    </div>
+    </Overlay>
   )
 }

@@ -3,12 +3,15 @@ import { Input } from '@/components/Input'
 import { CloseIcon } from '@/components/Icons'
 import { DatePicker } from '@/components/DatePicker'
 import { useDialog } from '../store/dialog'
-import { FormEvent, useState } from 'react'
+import { Dispatch, FormEvent, useState } from 'react'
 import ProductSelect from './ProductSelect'
 import createRecord from '../services/create_record'
 import { Product, record_type_id } from 'src/types'
 import { format } from 'date-fns'
 import useRecordsStore from '../store/useRecordsStore.ts'
+import Overlay from '@/components/Overlay.tsx'
+import { Toaster } from '@/components/Toaster.tsx'
+import { ToastProps } from '@/components/Toast.tsx'
 
 interface FormError {
   productError: boolean
@@ -18,9 +21,11 @@ interface FormError {
 }
 
 export default function DialogRecord({
-  typeRecord
+  typeRecord,
+  setToast
 }: {
   typeRecord: record_type_id
+  setToast: Dispatch<React.SetStateAction<ToastProps | undefined>>
 }) {
   const { closeDialog } = useDialog()
   const { fetchRecords } = useRecordsStore()
@@ -33,124 +38,138 @@ export default function DialogRecord({
     userError: false
   })
 
+  const setFieldError = (field: keyof FormError, isError: boolean) => {
+    setErrors((prevErrors) => ({ ...prevErrors, [field]: isError }))
+  }
+
+  const validateForm = (user: any, quantity: string | null): boolean => {
+    let isValid = true
+    if (!product || !product.id) {
+      setFieldError('productError', true)
+      isValid = false
+    }
+    if (!user?.id) {
+      setFieldError('userError', true)
+      isValid = false
+    }
+    if (!quantity || Number(quantity) === 0 || isNaN(Number(quantity))) {
+      setFieldError('quantityError', true)
+      isValid = false
+    }
+    return isValid
+  }
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const user = JSON.parse(localStorage.getItem('user') as string)
-    if (!product) {
-      setErrors((prevError) => ({
-        productError: true,
-        quantityError: prevError.quantityError,
-        dateError: prevError.dateError,
-        userError: prevError.userError
-      }))
-      return
-    }
+    const quantity = formData.get('quantity')?.toString() ?? null
 
-    if (!user.id) {
-      setErrors((prevError) => ({
-        productError: prevError.productError,
-        quantityError: prevError.quantityError,
-        dateError: prevError.dateError,
-        userError: true
-      }))
-      return
-    }
-
-    if (
-      Number(formData.get('quantity')) === 0 ||
-      isNaN(Number(formData.get('quantity')))
-    ) {
-      setErrors((prevError) => ({
-        productError: prevError.productError,
-        quantityError: prevError.quantityError,
-        dateError: prevError.dateError,
-        userError: true
-      }))
-      return
-    }
+    const canAdd = validateForm(user, quantity)
+    console.log(canAdd)
+    if (!validateForm(user, quantity)) return
 
     createRecord({
-      product_id: product.id,
-      user_id: Number(user.id),
-      record_quantity: Number(formData.get('quantity')),
-      record_date: format(date?.toString() ?? '', 'yyyy-MM-dd'),
+      product_id: product!.id,
+      user_id: user.id,
+      record_quantity: Number(quantity),
+      record_date: format(date ?? new Date(), 'yyyy-MM-dd'),
       record_type_id: typeRecord
-    }).then(() => {
-      fetchRecords(typeRecord === 2 ? 'expensesEndpoint' : 'incomesEndpoint')
-      closeDialog()
     })
+      .then(({ newRecord }) =>
+        setToast({
+          title: '✅',
+          description: `${quantity} ${newRecord.volume_name} de ${newRecord.product_name} fueron registrados`,
+          variant: 'success',
+          duration: 2000
+        })
+      )
+      .catch(() => {
+        setToast({
+          title: '❌',
+          description: `Ha habido un error`,
+          variant: 'error'
+        })
+      })
+
+    fetchRecords(typeRecord === 2 ? 'expensesEndpoint' : 'incomesEndpoint')
+    closeDialog()
   }
   return (
-    <div className="fixed z-10 top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-85">
-      <form
-        className="w-1/2 lg:w-1/3 bg-white p-6 rounded-lg"
-        onSubmit={handleSubmit}
-      >
-        <section className="flex items-center justify-between">
-          <h3 className="text-deep-blue font-bold text-xl mb-4">
-            Nuevo Registro
-          </h3>
+    <>
+      <Toaster />
+      <Overlay>
+        <form
+          className="w-1/2 lg:w-1/3 bg-white p-6 rounded-lg"
+          onSubmit={handleSubmit}
+        >
+          <section className="flex items-center justify-between">
+            <h3 className="text-deep-blue font-bold text-xl mb-4">
+              Nuevo Registro
+            </h3>
 
-          <button type="button" onClick={closeDialog} aria-label="Cerrar">
-            <CloseIcon />
+            <button type="button" onClick={closeDialog} aria-label="Cerrar">
+              <CloseIcon />
+            </button>
+          </section>
+
+          <ProductSelect
+            setProduct={setProduct}
+            hasError={errors.productError}
+          />
+
+          <Label
+            htmlFor="quantity"
+            className="text-[#003249] text-base font-semibold mt-3"
+          >
+            Cantidad
+          </Label>
+          {errors.quantityError && (
+            <span className="w-full px-2 py-1 rounded-md text-[#F95454] font-semibold">
+              La cantidad no puede ser 0
+            </span>
+          )}
+          <Input
+            placeholder="Escribe..."
+            id="quantity"
+            name="quantity"
+            type="number"
+            step={product?.unitId === 2 ? '1' : '0.01'}
+            className="mb-3"
+            required
+          />
+
+          {errors.quantityError && (
+            <span className="text-[#F95454] font-semibold">Error</span>
+          )}
+
+          <Label
+            htmlFor="date"
+            className="text-[#003249] text-base font-semibold"
+          >
+            Fecha
+          </Label>
+          <DatePicker
+            value={date}
+            onChange={setDate}
+            className="w-full"
+            id="date"
+          />
+
+          {errors.dateError && (
+            <span className="text-[#F95454] font-semibold">Error</span>
+          )}
+
+          {errors.userError && (
+            <span className="text-[#F95454] font-semibold">Error</span>
+          )}
+          <button
+            type="submit"
+            className="w-full bg-sky-blue mt-6 py-1 px-4 rounded-md text-white font-semibold"
+          >
+            Registrar Consumo
           </button>
-        </section>
-
-        <ProductSelect setProduct={setProduct} hasError={errors.productError} />
-
-        <Label
-          htmlFor="quantity"
-          className="text-[#003249] text-base font-semibold mt-3"
-        >
-          Cantidad
-        </Label>
-        {errors.quantityError && (
-          <span className="w-full px-2 py-1 rounded-md text-[#F95454] font-semibold">
-            La cantidad no puede ser 0
-          </span>
-        )}
-        <Input
-          placeholder="Escribe..."
-          id="quantity"
-          name="quantity"
-          type="number"
-          step={product?.unitId === 2 ? '1' : '0.01'}
-          className="mb-3"
-          required
-        />
-
-        {errors.quantityError && (
-          <span className="text-[#F95454] font-semibold">Error</span>
-        )}
-
-        <Label
-          htmlFor="date"
-          className="text-[#003249] text-base font-semibold"
-        >
-          Fecha
-        </Label>
-        <DatePicker
-          value={date}
-          onChange={setDate}
-          className="w-full"
-          id="date"
-        />
-
-        {errors.dateError && (
-          <span className="text-[#F95454] font-semibold">Error</span>
-        )}
-
-        {errors.userError && (
-          <span className="text-[#F95454] font-semibold">Error</span>
-        )}
-        <button
-          type="submit"
-          className="w-full bg-sky-blue mt-6 py-1 px-4 rounded-md text-white font-semibold"
-        >
-          Registrar Consumo
-        </button>
-      </form>
-    </div>
+        </form>
+      </Overlay>
+    </>
   )
 }

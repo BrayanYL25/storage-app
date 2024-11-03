@@ -24,7 +24,7 @@ const useRecordsStore = create<RecordsState>((set) => ({
     }
 
     try {
-      const data = await getRecords({ endpoint }) // Llama al servicio API
+      const data = await getRecords({ endpoint })
       set({ records: data, loading: false })
     } catch (e) {
       console.error(e)

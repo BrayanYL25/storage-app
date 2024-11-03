@@ -23,9 +23,9 @@ export default async function createRecord(record: RecordRequest) {
     }
     const recordCreated = await response.json()
 
-    // return recordCreated
-    console.log(recordCreated)
+    return { newRecord: recordCreated }
   } catch (e) {
-    console.error(e)
+    console.log(e)
+    throw e
   }
 }
