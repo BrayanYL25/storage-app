@@ -6,7 +6,7 @@ import { useDialog } from '../store/dialog'
 import { FormEvent, useState } from 'react'
 import ProductSelect from './ProductSelect'
 import createRecord from '../services/create_record'
-import { record_type_id } from 'src/types'
+import { Product, record_type_id } from 'src/types'
 import { format } from 'date-fns'
 import useRecordsStore from '../store/useRecordsStore.ts'
 
@@ -25,7 +25,7 @@ export default function DialogRecord({
   const { closeDialog } = useDialog()
   const { fetchRecords } = useRecordsStore()
   const [date, setDate] = useState<Date | undefined>(undefined)
-  const [productId, setProductId] = useState<number | undefined>()
+  const [product, setProduct] = useState<Product | undefined>()
   const [errors, setErrors] = useState<FormError>({
     productError: false,
     quantityError: false,
@@ -37,7 +37,7 @@ export default function DialogRecord({
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const user = JSON.parse(localStorage.getItem('user') as string)
-    if (!productId) {
+    if (!product) {
       setErrors((prevError) => ({
         productError: true,
         quantityError: prevError.quantityError,
@@ -71,7 +71,7 @@ export default function DialogRecord({
     }
 
     createRecord({
-      product_id: productId,
+      product_id: product.id,
       user_id: Number(user.id),
       record_quantity: Number(formData.get('quantity')),
       record_date: format(date?.toString() ?? '', 'yyyy-MM-dd'),
@@ -97,11 +97,7 @@ export default function DialogRecord({
           </button>
         </section>
 
-        <ProductSelect setId={setProductId} />
-
-        {errors.productError && (
-          <span className="text-[#F95454] font-semibold">Error</span>
-        )}
+        <ProductSelect setProduct={setProduct} hasError={errors.productError} />
 
         <Label
           htmlFor="quantity"
@@ -109,11 +105,17 @@ export default function DialogRecord({
         >
           Cantidad
         </Label>
+        {errors.quantityError && (
+          <span className="w-full px-2 py-1 rounded-md text-[#F95454] font-semibold">
+            La cantidad no puede ser 0
+          </span>
+        )}
         <Input
           placeholder="Escribe..."
           id="quantity"
           name="quantity"
           type="number"
+          step={product?.unitId === 2 ? '1' : '0.01'}
           className="mb-3"
           required
         />

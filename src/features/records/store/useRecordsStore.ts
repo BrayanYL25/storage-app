@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Record } from 'src/types'
+import { RecordsState } from 'src/types'
 import { type viewRecord } from 'src/types'
 import {
   expensesEndpoint,
@@ -7,13 +7,6 @@ import {
   allRecordsEndpoint
 } from '@/services/endpoints'
 import getRecords from '../services/get_records.ts'
-
-interface RecordsState {
-  records: Record[] | undefined
-  loading: boolean
-  error: string | null
-  fetchRecords: (type: viewRecord) => Promise<void>
-}
 
 const useRecordsStore = create<RecordsState>((set) => ({
   records: undefined,

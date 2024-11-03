@@ -1,17 +1,16 @@
 import { useDialog } from '../../records/store/dialog'
+import useReportStore from '../store/useReportStore'
 import CreateReportButton from './CreateReportButton'
 import NewRecordButton from './NewRecordButton'
 
 export default function Controls() {
-  const { openDialog } = useDialog()
+  const { openDialog: openCreateRecordDialog } = useDialog()
+  const { openDialog: openCreateReportDialog } = useReportStore()
 
-  const handleClick = () => {
-    openDialog()
-  }
   return (
     <section className="flex gap-3">
-      <NewRecordButton handleClick={handleClick} />
-      <CreateReportButton />
+      <NewRecordButton handleClick={openCreateRecordDialog} />
+      <CreateReportButton handleClick={openCreateReportDialog} />
     </section>
   )
 }

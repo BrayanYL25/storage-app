@@ -1,4 +1,5 @@
 import { Badge } from '@/components/Badge'
+import { DeleteIcon, EditIcon } from '@/components/Icons'
 import {
   Table,
   TableBody,
@@ -33,6 +34,9 @@ export function Records({
               <TableHeaderCell>Unidad</TableHeaderCell>
               <TableHeaderCell>Correo</TableHeaderCell>
               <TableHeaderCell className="text-right">Fecha</TableHeaderCell>
+              <TableHeaderCell className="text-center">
+                Acciones
+              </TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -52,6 +56,10 @@ export function Records({
                 </TableCell>
                 <TableCell className="text-right font-semibold">
                   {item.date}
+                </TableCell>
+                <TableCell className="flex justify-center gap-4">
+                  <EditIcon />
+                  <DeleteIcon />
                 </TableCell>
               </TableRow>
             ))}
