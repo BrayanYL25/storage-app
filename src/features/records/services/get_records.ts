@@ -6,6 +6,9 @@ export default async function getRecords({ endpoint }: { endpoint: string }) {
       credentials: 'include'
     })
 
+    if (!response.ok) {
+      throw new Error('Hubo un error en la peticion')
+    }
     const records = await response.json()
 
     return records.map((record: any): Record => {
@@ -21,5 +24,6 @@ export default async function getRecords({ endpoint }: { endpoint: string }) {
     })
   } catch (e) {
     console.error(e)
+    throw e
   }
 }

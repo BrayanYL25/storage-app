@@ -20,7 +20,7 @@ export default function DashboardContent({
   typeRecord: record_type_id
   titleContent: string
 }) {
-  const { loading, records, fetchRecords } = useRecordsStore()
+  const { error, loading, records, fetchRecords } = useRecordsStore()
   const { stateRecordDialog, closeRecordDialog } = useDialog()
   const { stateReportDialog, closeReportDialog } = useReportStore()
   const [toastInfo, setToastInfo] = useState<ToastProps | undefined>()
@@ -41,7 +41,14 @@ export default function DashboardContent({
     <main className="px-9 pt-6">
       <Controls />
       <Toaster />
-      <RecordsTable data={records} title={titleContent} isLoading={loading} />
+      <RecordsTable
+        data={records}
+        title={titleContent}
+        isLoading={loading}
+        hasError={Boolean(error)}
+        errorMessage={error}
+        type={typeRecord}
+      />
       {stateRecordDialog && (
         <DialogRecord typeRecord={typeRecord} setToast={setToastInfo} />
       )}

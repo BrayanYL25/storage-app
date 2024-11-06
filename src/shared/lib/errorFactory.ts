@@ -10,6 +10,6 @@ const createError: Errors = ({ name }: { name: string }) => {
 }
 
 export const SignInRequestFailed = createError({ name: 'SignInRequestFailed' })
-export const AccessDenied = createError({ name: 'AccessDenied' })
+export const AccessDeniedError = createError({ name: 'AccessDenied' })
 export const LogOutError = createError({ name: 'LogOutError' })
 export const ProductsError = createError({ name: 'ProductsError' })

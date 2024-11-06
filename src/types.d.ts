@@ -48,6 +48,11 @@ export type Errors = (params: { name: string }) => {
 
 type record_type_id = 1 | 2
 
+type dialog = {
+  id: number | null
+  isOpen: boolean
+}
+
 type viewRecord = 'expensesEndpoint' | 'incomesEndpoint' | 'all'
 
 export interface RecordsState {

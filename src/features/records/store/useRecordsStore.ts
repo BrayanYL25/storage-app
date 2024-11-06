@@ -28,7 +28,7 @@ const useRecordsStore = create<RecordsState>((set) => ({
       set({ records: data, loading: false })
     } catch (e) {
       console.error(e)
-      set({ error: 'Hubo un error', loading: false })
+      set({ error: 'Hubo un error. Inicia sesión otra vez.', loading: false })
     }
   }
 }))
