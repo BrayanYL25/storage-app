@@ -9,7 +9,7 @@ import {
   TableRoot,
   TableRow
 } from '@/components/Table'
-import { dialog, Record, record_type_id } from 'src/types'
+import { dialog, Record, RecordEndpoints } from 'src/types'
 import { useState } from 'react'
 import DeleteRecordDialog from './DeleteRecordDialog'
 
@@ -26,7 +26,7 @@ export function RecordsTable({
   errorMessage: string | null
   isLoading: boolean
   title: string
-  type: record_type_id
+  type: keyof RecordEndpoints
 }) {
   const [deleteDialogState, setDeleteDialogState] = useState<dialog>({
     id: null,

@@ -6,12 +6,13 @@ import { useDialog } from '../store/dialog'
 import { Dispatch, FormEvent, useState } from 'react'
 import ProductSelect from './ProductSelect'
 import createRecord from '../services/create_record'
-import { Product, record_type_id } from 'src/types'
+import { Product, RecordEndpoints } from 'src/types'
 import { format } from 'date-fns'
 import useRecordsStore from '../store/useRecordsStore.ts'
 import Overlay from '@/components/Overlay.tsx'
 import { Toaster } from '@/components/Toaster.tsx'
 import { ToastProps } from '@/components/Toast.tsx'
+import { RECORD_ENDPOINTS } from '@/services/endpoints.ts'
 
 interface FormError {
   productError: boolean
@@ -21,10 +22,10 @@ interface FormError {
 }
 
 export default function DialogRecord({
-  typeRecord,
+  type,
   setToast
 }: {
-  typeRecord: record_type_id
+  type: keyof RecordEndpoints
   setToast: Dispatch<React.SetStateAction<ToastProps | undefined>>
 }) {
   const { closeRecordDialog: closeDialog } = useDialog()
@@ -60,29 +61,28 @@ export default function DialogRecord({
   }
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const user = JSON.parse(localStorage.getItem('user') as string)
     const quantity = formData.get('quantity')?.toString() ?? null
 
     const canAdd = validateForm(user, quantity)
-    console.log(canAdd)
-    if (!validateForm(user, quantity)) return
+    if (!canAdd) return
 
-    createRecord({
+    createRecord(RECORD_ENDPOINTS[type], {
       product_id: product!.id,
       user_id: user.id,
       record_quantity: Number(quantity),
-      record_date: format(date ?? new Date(), 'yyyy-MM-dd'),
-      record_type_id: typeRecord
+      record_date: format(date ?? new Date(), 'yyyy-MM-dd')
     })
-      .then(({ newRecord }) =>
+      .then(({ newRecord }) => {
         setToast({
           title: '✅',
-          description: `${quantity} ${newRecord.volume_name} de ${newRecord.product_name} fueron registrados`,
+          description: `${quantity} ${newRecord.unitName} de ${newRecord.productName} fueron registrados`,
           variant: 'success',
           duration: 2000
         })
-      )
+      })
       .catch(() => {
         setToast({
           title: '❌',
@@ -91,7 +91,7 @@ export default function DialogRecord({
         })
       })
 
-    fetchRecords(typeRecord === 2 ? 'expensesEndpoint' : 'incomesEndpoint')
+    fetchRecords(type)
     closeDialog()
   }
   return (

@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from 'react'
 import { AccessDeniedError } from '@/lib/errorFactory'
 import { AUTH_ENDPOINTS } from '@/services/endpoints'
 import useRecordsStore from '#/records/store/useRecordsStore'
+import { RecordEndpoints } from 'src/types'
 
 export default function Dashboard() {
   const [isAuthenticated, setAuthentication] = useState(true)
@@ -43,11 +44,9 @@ export default function Dashboard() {
   }, [])
 
   useEffect(() => {
-    fetchRecords(
-      location.pathname === '/dashboard/expenses'
-        ? 'expensesEndpoint'
-        : 'incomesEndpoint'
-    )
+    const endpoint: keyof RecordEndpoints =
+      location.pathname === '/dashboard/expenses' ? 'OUTCOME' : 'INCOME'
+    fetchRecords(endpoint)
   }, [isRefreshed])
   return (
     <>

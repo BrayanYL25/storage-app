@@ -1,11 +1,13 @@
+import { RecordEndpoints } from 'src/types'
+
 const EXPENSES_ENPOINTS = {
   REPORT: 'http://localhost:3000/api/report/expenses',
-  RECORD: 'http://localhost:3000/api/record/expenses'
+  RECORD: 'http://localhost:3000/api/record/outcome'
 }
 
 const INCOMES_ENDPOINTS = {
-  REPORT: 'http://localhost:3000/api/report/expenses',
-  RECORD: 'http://localhost:3000/api/record/incomes'
+  REPORT: 'http://localhost:3000/api/report/incomes',
+  RECORD: 'http://localhost:3000/api/record/income'
 }
 
 const AUTH_ENDPOINTS = {
@@ -15,18 +17,26 @@ const AUTH_ENDPOINTS = {
   REFRESH: 'http://localhost:3000/api/user/refresh'
 }
 
+const REPORTS_ENPOINT = {
+  EXPENSES: 'http://localhost:3000/api/report/expenses',
+  INCOMES: 'http://localhost:3000/api/report/incomes'
+}
+
 const PRODUCT_ENDPOINTS = {
   PRODUCT: 'http://localhost:3000/api/product'
 }
 
-const RECORD_ENDPOINTS = {
+const RECORD_ENDPOINTS: RecordEndpoints = {
   ALL: 'http://localhost:3000/api/record/all',
-  RECORD: 'http://localhost:3000/api/record'
+  RECORD: 'http://localhost:3000/api/record',
+  OUTCOME: 'http://localhost:3000/api/record/outcome',
+  INCOME: 'http://localhost:3000/api/record/income'
 }
 
 export {
   PRODUCT_ENDPOINTS,
   RECORD_ENDPOINTS,
+  REPORTS_ENPOINT,
   AUTH_ENDPOINTS,
   EXPENSES_ENPOINTS,
   INCOMES_ENDPOINTS

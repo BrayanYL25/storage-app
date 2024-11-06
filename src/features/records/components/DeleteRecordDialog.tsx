@@ -1,6 +1,6 @@
 import Overlay from '@/components/Overlay'
 import { Dispatch, FormEvent } from 'react'
-import { dialog, record_type_id, viewRecord } from 'src/types'
+import { dialog, RecordEndpoints } from 'src/types'
 import deleteRecord from '../services/delete_record'
 import useRecordsStore from '../store/useRecordsStore'
 import { Toaster } from '@/components/Toaster'
@@ -12,7 +12,7 @@ export default function DeleteRecordDialog({
   set
 }: {
   id: number | null
-  type: record_type_id
+  type: keyof RecordEndpoints
   set: Dispatch<React.SetStateAction<dialog>>
 }) {
   const { fetchRecords } = useRecordsStore()
@@ -28,9 +28,7 @@ export default function DeleteRecordDialog({
           isOpen: false
         })
 
-        const stringType: viewRecord =
-          type === 1 ? 'incomesEndpoint' : 'expensesEndpoint'
-        fetchRecords(stringType).then(() => {
+        fetchRecords(type).then(() => {
           toast({
             title: 'Info',
             description: 'El registro fue borrado exitosamente',

@@ -1,4 +1,4 @@
-import { record_type_id, viewRecord } from 'src/types'
+import { RecordEndpoints } from 'src/types'
 import ReportDialog from '#/report/components/ReportDialog'
 import useRecordsStore from '#/records/store/useRecordsStore.ts'
 import { useDialog } from '#/records/store/dialog.ts'
@@ -12,13 +12,11 @@ import { useEffect, useState } from 'react'
 import useReportStore from '../store/useReportStore'
 
 export default function DashboardContent({
-  endpoint,
-  typeRecord,
-  titleContent
+  titleContent,
+  type
 }: {
-  endpoint: viewRecord
-  typeRecord: record_type_id
   titleContent: string
+  type: keyof RecordEndpoints
 }) {
   const { error, loading, records, fetchRecords } = useRecordsStore()
   const { stateRecordDialog, closeRecordDialog } = useDialog()
@@ -26,7 +24,7 @@ export default function DashboardContent({
   const [toastInfo, setToastInfo] = useState<ToastProps | undefined>()
 
   useEffect(() => {
-    fetchRecords(endpoint)
+    fetchRecords(type)
 
     closeRecordDialog()
     closeReportDialog()
@@ -47,10 +45,10 @@ export default function DashboardContent({
         isLoading={loading}
         hasError={Boolean(error)}
         errorMessage={error}
-        type={typeRecord}
+        type={type}
       />
       {stateRecordDialog && (
-        <DialogRecord typeRecord={typeRecord} setToast={setToastInfo} />
+        <DialogRecord type={type} setToast={setToastInfo} />
       )}
       {stateReportDialog && <ReportDialog />}
     </main>

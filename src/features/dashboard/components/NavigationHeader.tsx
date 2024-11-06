@@ -15,9 +15,9 @@ type RouteLink = {
 const allRoutes: RouteLink[] = [
   {
     route: 'expenses',
-    name: 'Salidas',
+    name: 'Consumos',
     style: '',
-    title: 'Salidas | Mi inventario'
+    title: 'Consumos | Mi inventario'
   },
   {
     route: 'incomes',

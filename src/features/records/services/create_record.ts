@@ -1,20 +1,21 @@
 import { RecordRequest } from 'src/types'
-import { RECORD_ENDPOINTS } from '@/services/endpoints'
 
-export default async function createRecord(record: RecordRequest) {
+export default async function createRecord(
+  endpoint: string,
+  record: RecordRequest
+) {
   try {
-    const response = await fetch(RECORD_ENDPOINTS.RECORD, {
+    const response = await fetch(endpoint, {
       method: 'POST',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json; charset=utf-8'
       },
       body: JSON.stringify({
-        product_id: record.product_id,
-        user_id: record.user_id,
-        record_type_id: record.record_type_id,
-        record_quantity: record.record_quantity,
-        record_date: record.record_date
+        productId: record.product_id,
+        userId: record.user_id,
+        recordQuantity: record.record_quantity,
+        recordDate: record.record_date
       })
     })
 

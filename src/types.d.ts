@@ -8,10 +8,16 @@ export interface Record {
   date: string
 }
 
+export type RecordEndpoints = {
+  ALL: string
+  RECORD: string
+  OUTCOME: string
+  INCOME: string
+}
+
 export interface RecordRequest {
   product_id: number
   user_id: number
-  record_type_id: record_type_id
   record_quantity: number
   record_date: string
 }
@@ -46,20 +52,18 @@ export type Errors = (params: { name: string }) => {
   new (message: string): Error
 }
 
-type record_type_id = 1 | 2
-
 type dialog = {
   id: number | null
   isOpen: boolean
 }
 
-type viewRecord = 'expensesEndpoint' | 'incomesEndpoint' | 'all'
+type viewRecord = 'EXPENSES' | 'INCOMES'
 
 export interface RecordsState {
   records: Record[] | undefined
   loading: boolean
   error: string | null
-  fetchRecords: (type: viewRecord) => Promise<void>
+  fetchRecords: (key: keyof RecordEndpoints) => Promise<void>
 }
 
 export interface RecordDialog {
