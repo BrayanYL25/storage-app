@@ -52,8 +52,10 @@ export default function Dashboard() {
     <>
       {isAuthenticated === false && <Navigate to="/" replace />}
       <Suspense>
-        <NavigationHeader />
-        <Outlet />
+        <div className="overflow-hidden h-screen grid grid-cols-12">
+          <NavigationHeader />
+          <Outlet />
+        </div>
       </Suspense>
     </>
   )

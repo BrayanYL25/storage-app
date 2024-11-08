@@ -48,11 +48,14 @@ export default function DashboardContent({
     }
   }, [toastInfo])
   return (
-    <main className="px-9 pt-6">
+    <main className="col-start-4 col-span-9 overflow-y-scroll px-9 pt-6">
       <Controls />
       <Toaster />
       <section className="my-4 grid grid-cols-2">
-        <BarList data={bar} />
+        <BarList
+          className="col-start-1 col-span-1 border-[1px] border-[#CCDBDC] rounded-lg p-3"
+          data={bar}
+        />
       </section>
       <RecordsTable
         data={records}

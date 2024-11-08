@@ -40,8 +40,8 @@ export default function NavigationHeader() {
   useEffect(() => {
     const getLinkStyle = (path: string) => {
       return location.pathname == `/dashboard/${path}`
-        ? 'px-2 pb-1 border-b-2 border-sky-blue text-sky-blue font-bold'
-        : 'px-2 pb-1 font-medium'
+        ? 'w-full px-3 py-2 bg-[#9AD1D4] bg-opacity-60 border-r-2 border-sky-blue text-sky-blue font-bold'
+        : 'w-full px-3 py-2 font-medium'
     }
     document.title =
       routes.find(({ route }) => `/dashboard/${route}` == location.pathname)
@@ -56,10 +56,19 @@ export default function NavigationHeader() {
 
   return (
     <>
-      <header className="w-full pt-7 px-9 border-b-[1px] border-light-gray">
-        <section className="mb-10 flex justify-between">
-          <h1 className="text-deep-blue text-3xl font-bold">Dashboard</h1>
+      <header className="h-screen col-start-1 col-span-3 overflow-hidden pt-7 border-b-[1px] flex flex-col border-r-[1px] border-light-gray">
+        <h1 className="text-deep-blue px-3 pb-4 text-3xl font-bold">
+          Dashboard
+        </h1>
+        <nav className="flex flex-col">
+          {routes.map(({ route, name, style }, index) => (
+            <Link to={route} key={index} className={style}>
+              {name}
+            </Link>
+          ))}
+        </nav>
 
+        <section className="mt-auto mb-4">
           <div className="flex justify-center">
             <Popover>
               <PopoverTrigger asChild>
@@ -68,7 +77,7 @@ export default function NavigationHeader() {
                   <SettingsIcon />
                 </button>
               </PopoverTrigger>
-              <PopoverContent className="p-0 mr-4">
+              <PopoverContent className="p-0 ml-4">
                 <div className="flex flex-col">
                   <AccountButton />
                   <div className="w-[90%] mx-auto border-b-[1px] border-light-gray" />
@@ -78,14 +87,6 @@ export default function NavigationHeader() {
             </Popover>
           </div>
         </section>
-
-        <nav className="flex gap-4">
-          {routes.map(({ route, name, style }, index) => (
-            <Link to={route} key={index} className={style}>
-              {name}
-            </Link>
-          ))}
-        </nav>
       </header>
     </>
   )
