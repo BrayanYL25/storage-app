@@ -30,7 +30,9 @@ const RECORD_ENDPOINTS: RecordEndpoints = {
   ALL: 'http://localhost:3000/api/record/all',
   RECORD: 'http://localhost:3000/api/record',
   OUTCOME: 'http://localhost:3000/api/record/outcome',
-  INCOME: 'http://localhost:3000/api/record/income'
+  INCOME: 'http://localhost:3000/api/record/income',
+  MOST_CONSUMED: 'http://localhost:3000/api/record/outcome/mostconsumed',
+  MOST_ENTERED: 'http://localhost:3000/api/record/income/mostentered'
 }
 
 export {

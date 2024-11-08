@@ -13,7 +13,11 @@ export type RecordEndpoints = {
   RECORD: string
   OUTCOME: string
   INCOME: string
+  MOST_CONSUMED: string
+  MOST_ENTERED: string
 }
+
+type LastTwoKeys = keyof Pick<RecordEndpoints, 'MOST_CONSUMED' | 'MOST_ENTERED'>
 
 export interface RecordRequest {
   product_id: number
