@@ -5,7 +5,7 @@ import DownloadReport from './DownloadReport.tsx'
 import Overlay from '@/components/Overlay.tsx'
 
 export default function ReportDialog() {
-  const { closeRecordDialog: closeDialog } = useReportStore()
+  const { closeReportDialog } = useReportStore()
 
   return (
     <Overlay>
@@ -18,7 +18,7 @@ export default function ReportDialog() {
             Generar Reporte
           </h3>
 
-          <button type="button" aria-label="Cerrar" onClick={closeDialog}>
+          <button type="button" aria-label="Cerrar" onClick={closeReportDialog}>
             <CloseIcon />
           </button>
         </section>

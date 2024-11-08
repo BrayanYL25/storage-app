@@ -5,12 +5,12 @@ import NewRecordButton from './NewRecordButton'
 
 export default function Controls() {
   const { openRecordDialog: openCreateRecordDialog } = useDialog()
-  const { openRecordDialog: openCreateReportDialog } = useReportStore()
+  const { openReportDialog } = useReportStore()
 
   return (
     <section className="flex gap-3">
       <NewRecordButton handleClick={openCreateRecordDialog} />
-      <CreateReportButton handleClick={openCreateReportDialog} />
+      <CreateReportButton handleClick={openReportDialog} />
     </section>
   )
 }
