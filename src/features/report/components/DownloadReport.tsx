@@ -54,7 +54,7 @@ export default function DownloadReport() {
     const month = Number(dataForm.get('month'))
     const year = Number(dataForm.get('year'))
 
-    getReport({ month, year }).then(() => console.log('Works'))
+    getReport({ month, year }).then()
   }
   return (
     <form onSubmit={handleSubmit}>

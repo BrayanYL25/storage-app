@@ -17,7 +17,6 @@ export default async function getMostRecord({
       value: record.total
     }))
 
-    console.log(mappedMostRecords)
     return mappedMostRecords
   } catch (e) {
     console.error(e)

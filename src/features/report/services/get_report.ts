@@ -21,21 +21,17 @@ export default async function getReport({
 
     const blob = await response.blob()
 
-    // Crea un nombre para el archivo si no viene en los encabezados
     const filename = `Reporte_${month}_${year}.xlsx`
 
-    // Crea una URL de objeto temporal para el Blob
     const url = URL.createObjectURL(blob)
 
-    // Crea un elemento <a> para descargar el archivo
     const enlaceDescarga = document.createElement('a')
     enlaceDescarga.href = url
-    enlaceDescarga.download = filename // Nombre del archivo descargado
+    enlaceDescarga.download = filename
     document.body.appendChild(enlaceDescarga)
-    enlaceDescarga.click() // Activa la descarga
+    enlaceDescarga.click()
     document.body.removeChild(enlaceDescarga)
 
-    // Libera la URL de objeto
     URL.revokeObjectURL(url)
   } catch (e) {
     console.error(e)

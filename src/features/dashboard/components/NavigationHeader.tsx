@@ -21,9 +21,9 @@ const allRoutes: RouteLink[] = [
   },
   {
     route: 'incomes',
-    name: 'Entradas',
+    name: 'Compras',
     style: '',
-    title: 'Ingresos | Mi inventario'
+    title: 'Compras (Ingresos) | Mi inventario'
   },
   {
     route: 'products',
@@ -58,7 +58,7 @@ export default function NavigationHeader() {
     <>
       <header className="h-screen col-start-1 col-span-3 overflow-hidden pt-7 border-b-[1px] flex flex-col border-r-[1px] border-light-gray">
         <h1 className="text-deep-blue px-3 pb-4 text-3xl font-bold">
-          Dashboard
+          Inventario
         </h1>
         <nav className="flex flex-col">
           {routes.map(({ route, name, style }, index) => (
