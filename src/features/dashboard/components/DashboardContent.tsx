@@ -1,7 +1,7 @@
-import { LastTwoKeys, RecordEndpoints } from 'src/types'
+import { LastTwoKeys, TypeRecord } from 'src/types'
 import ReportDialog from '#/report/components/ReportDialog'
 import useRecordsStore from '#/records/store/useRecordsStore.ts'
-import { useDialog } from '#/records/store/dialog.ts'
+import { useCreateRecordDialog } from '#/records/store/dialog.ts'
 import { RecordsTable } from '#/records/components/RecordsTable.tsx'
 import DialogRecord from '#/records/components/DialogRecord.tsx'
 import { Toaster } from '@/components/Toaster'
@@ -24,11 +24,11 @@ export default function DashboardContent({
   barlist
 }: {
   titleContent: string
-  type: keyof RecordEndpoints
+  type: TypeRecord
   barlist: LastTwoKeys
 }) {
   const { error, loading, records, fetchRecords } = useRecordsStore()
-  const { stateRecordDialog, closeRecordDialog } = useDialog()
+  const { stateRecordDialog, closeRecordDialog } = useCreateRecordDialog()
   const { stateReportDialog, closeReportDialog } = useReportStore()
   const [bar, setBar] = useState<barlistData[]>([])
   const [toastInfo, setToastInfo] = useState<ToastProps | undefined>()

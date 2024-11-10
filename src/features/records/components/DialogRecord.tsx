@@ -2,11 +2,11 @@ import { Label } from '@/components/Label'
 import { Input } from '@/components/Input'
 import { CloseIcon } from '@/components/Icons'
 import { DatePicker } from '@/components/DatePicker'
-import { useDialog } from '../store/dialog'
+import { useCreateRecordDialog } from '../store/dialog'
 import { Dispatch, FormEvent, useState } from 'react'
 import ProductSelect from './ProductSelect'
 import createRecord from '../services/create_record'
-import { Product, RecordEndpoints } from 'src/types'
+import { Product, TypeRecord } from 'src/types'
 import { format } from 'date-fns'
 import useRecordsStore from '../store/useRecordsStore.ts'
 import Overlay from '@/components/Overlay.tsx'
@@ -26,10 +26,10 @@ export default function DialogRecord({
   type,
   setToast
 }: {
-  type: keyof RecordEndpoints
+  type: TypeRecord
   setToast: Dispatch<React.SetStateAction<ToastProps | undefined>>
 }) {
-  const { closeRecordDialog: closeDialog } = useDialog()
+  const { closeRecordDialog: closeDialog } = useCreateRecordDialog()
   const { fetchRecords } = useRecordsStore()
   const [date, setDate] = useState<Date | undefined>(undefined)
   const [product, setProduct] = useState<Product | undefined>()
@@ -170,7 +170,7 @@ export default function DialogRecord({
             type="submit"
             className="w-full bg-sky-blue mt-6 py-1 px-4 rounded-md text-white font-semibold"
           >
-            Registrar Consumo
+            {type === 'OUTCOME' ? 'Registrar Consumo' : 'Registrar Ingreso'}
           </button>
         </form>
       </Overlay>

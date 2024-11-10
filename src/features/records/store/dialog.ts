@@ -1,10 +1,10 @@
 import { create } from 'zustand'
-import { RecordDialog } from 'src/types'
+import { CreateRecordDialog } from 'src/types'
 
-const useDialog = create<RecordDialog>((set) => ({
+const useCreateRecordDialog = create<CreateRecordDialog>((set) => ({
   stateRecordDialog: false,
   closeRecordDialog: () => set(() => ({ stateRecordDialog: false })),
   openRecordDialog: () => set(() => ({ stateRecordDialog: true }))
 }))
 
-export { useDialog }
+export { useCreateRecordDialog }

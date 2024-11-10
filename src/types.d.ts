@@ -33,6 +33,7 @@ export type RecordEndpoints = {
   MOST_ENTERED: string
 }
 
+type TypeRecord = keyof Pick<RecordEndpoints, 'INCOME' | 'OUTCOME'>
 type LastTwoKeys = keyof Pick<RecordEndpoints, 'MOST_CONSUMED' | 'MOST_ENTERED'>
 
 export interface Product {
@@ -79,13 +80,13 @@ export interface RecordsState {
   fetchRecords: (key: keyof RecordEndpoints) => Promise<void>
 }
 
-export interface RecordDialog {
+export interface CreateRecordDialog {
   stateRecordDialog: boolean
   closeRecordDialog: () => void
   openRecordDialog: () => void
 }
 
-export interface ReportDialog {
+export interface CreateReportDialog {
   stateReportDialog: boolean
   closeReportDialog: () => void
   openReportDialog: () => void
