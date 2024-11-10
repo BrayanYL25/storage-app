@@ -69,7 +69,7 @@ export default function NavigationHeader() {
         </nav>
 
         <section className="mt-auto mb-4">
-          <div className="flex justify-center">
+          <div className="flex justify-start px-3 pb-1">
             <Popover>
               <PopoverTrigger asChild>
                 {/* <Button variant="primary">Open</Button> */}

@@ -37,7 +37,7 @@ interface ActionProps {
   onClick: () => void | Promise<void>
 }
 
-export interface ToastProps
+interface ToastProps
   extends React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> {
   variant?: 'info' | 'success' | 'warning' | 'error' | 'loading'
   title?: string

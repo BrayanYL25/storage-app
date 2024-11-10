@@ -13,7 +13,7 @@ export default function SignUp() {
   return (
     <main className="min-h-screen flex justify-center items-center">
       <form
-        className="w-full md:w-1/2 lg:w-[40%] xl:w-[30%] flex flex-col rounded-lg md:border-[1px] border-[#CCDBDC] p-5 px-8"
+        className="w-full md:w-1/2 lg:w-[35%] xl:w-[40%] flex flex-col rounded-lg md:border-[1px] border-[#CCDBDC] p-5 px-8"
         onSubmit={handleSubmit}
       >
         <h1 className="text-[#003249] text-center md:text-left text-2xl mb-8 font-bold">
