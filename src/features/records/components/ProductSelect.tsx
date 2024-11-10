@@ -1,5 +1,5 @@
 import { Label } from '@/components/Label'
-import { Dispatch, useEffect, useState } from 'react'
+import { Dispatch, useEffect, useRef, useState } from 'react'
 import { Product } from 'src/types'
 import getAllProducts from '../../products/services/get_all_products.ts'
 import {
@@ -9,6 +9,7 @@ import {
   SelectItem,
   SelectValue
 } from '@/components/Select.tsx'
+import { Badge } from '@/components/Badge.tsx'
 
 export default function ProductSelect({
   setProduct,
@@ -18,6 +19,7 @@ export default function ProductSelect({
   hasError: boolean
 }) {
   const [productList, setProductList] = useState<Product[]>()
+  const unitName = useRef('')
 
   useEffect(() => {
     getAllProducts().then(setProductList)
@@ -28,16 +30,20 @@ export default function ProductSelect({
     const productSelected = productList?.find(
       (product) => product.id === idProduct
     )
+    unitName.current = productSelected!.unitName as string
     setProduct(productSelected)
   }
   return (
     <div className="mb-3">
-      <Label className="text-[#003249] text-base font-semibold">Producto</Label>
-      {hasError && (
-        <span className="w-full px-2 py-1 rounded-md text-[#F95454] font-semibold">
-          Error: Debes seleccionar un producto
-        </span>
-      )}
+      <div className="mb-2 flex gap-2">
+        <Label className="text-[#003249] text-base font-semibold">
+          Producto
+        </Label>
+        {unitName.current !== '' && (
+          <Badge variant="success">{unitName.current}</Badge>
+        )}
+        {hasError && <Badge variant="error">Selecciona un producto</Badge>}
+      </div>
       <Select onValueChange={handleSelect}>
         <SelectTrigger>
           <SelectValue placeholder="Select" />

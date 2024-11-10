@@ -9,9 +9,10 @@ import {
   TableRoot,
   TableRow
 } from '@/components/Table'
-import { dialog, Record, RecordEndpoints } from 'src/types'
+import { dialog, EdittedRecord, Record, RecordEndpoints } from 'src/types'
 import { useState } from 'react'
 import DeleteRecordDialog from './DeleteRecordDialog'
+import EditDialogRecord from './EditDialogRecord'
 
 export function RecordsTable({
   data,
@@ -32,7 +33,27 @@ export function RecordsTable({
     id: null,
     isOpen: false
   })
+  const [editDialogState, setEditDialogState] = useState<EdittedRecord>({
+    open: false,
+    recordId: -1,
+    productId: -1,
+    unitId: -1,
+    productName: '',
+    quantity: -1,
+    date: ''
+  })
 
+  const handleEdit = (item: Record) => {
+    setEditDialogState({
+      open: true,
+      recordId: item.recordId,
+      productId: item.productId,
+      unitId: item.unitId,
+      productName: item.productName,
+      quantity: item.quantity,
+      date: item.date
+    })
+  }
   return (
     <>
       {deleteDialogState.isOpen && (
@@ -40,6 +61,16 @@ export function RecordsTable({
           id={deleteDialogState.id}
           type={type}
           set={setDeleteDialogState}
+        />
+      )}
+      {editDialogState.open && (
+        <EditDialogRecord
+          recordId={editDialogState.recordId}
+          productId={editDialogState.productId}
+          unitId={editDialogState.unitId}
+          productName={editDialogState.productName}
+          recordQuantity={editDialogState.quantity}
+          recordDate={editDialogState.date}
         />
       )}
       <section className="p-6 border-[1px] border-light-gray rounded-xl my-8">
@@ -77,9 +108,9 @@ export function RecordsTable({
               </TableHead>
               <TableBody>
                 {data?.map((item, index) => (
-                  <TableRow key={item.id}>
+                  <TableRow key={item.recordId}>
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{item.product}</TableCell>
+                    <TableCell>{item.productName}</TableCell>
                     <TableCell>{item.quantity}</TableCell>
                     <TableCell>
                       <Badge
@@ -95,7 +126,10 @@ export function RecordsTable({
                     <TableCell className="text-right font-semibold">
                       {item.date}
                     </TableCell>
-                    <TableCell className="flex justify-center gap-4">
+                    <TableCell
+                      className="flex justify-center gap-4"
+                      onClick={() => handleEdit(item)}
+                    >
                       <button type="button" aria-label="Editar Registro">
                         <EditIcon />
                       </button>
@@ -103,7 +137,10 @@ export function RecordsTable({
                         type="button"
                         aria-label="Borrar registro"
                         onClick={() =>
-                          setDeleteDialogState({ id: item.id, isOpen: true })
+                          setDeleteDialogState({
+                            id: item.recordId,
+                            isOpen: true
+                          })
                         }
                       >
                         <DeleteIcon />

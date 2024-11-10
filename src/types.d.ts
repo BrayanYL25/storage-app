@@ -1,12 +1,28 @@
 export interface Record {
-  id: number
-  product: string
+  userId?: number
+  recordId: number
+  productId: number
+  productName: string
   quantity: number
+  unitId: number
   unit: string
   type: 'SALIDA' | 'INGRESO'
   email: string
   date: string
 }
+
+export type EdittedRecord = Required<
+  Pick<
+    Record,
+    'recordId' | 'productId' | 'unitId' | 'productName' | 'quantity' | 'date'
+  >
+> & {
+  open: boolean
+}
+
+export type RecordRequest = Required<
+  Pick<Record, 'userId' | 'productId' | 'quantity' | 'date'>
+>
 
 export type RecordEndpoints = {
   ALL: string
@@ -18,13 +34,6 @@ export type RecordEndpoints = {
 }
 
 type LastTwoKeys = keyof Pick<RecordEndpoints, 'MOST_CONSUMED' | 'MOST_ENTERED'>
-
-export interface RecordRequest {
-  product_id: number
-  user_id: number
-  record_quantity: number
-  record_date: string
-}
 
 export interface Product {
   id: number

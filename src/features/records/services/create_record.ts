@@ -12,15 +12,15 @@ export default async function createRecord(
         'Content-Type': 'application/json; charset=utf-8'
       },
       body: JSON.stringify({
-        productId: record.product_id,
-        userId: record.user_id,
-        recordQuantity: record.record_quantity,
-        recordDate: record.record_date
+        productId: record.productId,
+        userId: record.userId,
+        quantity: record.quantity,
+        date: record.date
       })
     })
 
     if (!response.ok) {
-      throw new Error('El error esta en la api')
+      throw new Error('Hubo un error creando el registro')
     }
     const recordCreated = await response.json()
 

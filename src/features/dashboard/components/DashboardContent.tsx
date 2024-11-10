@@ -54,7 +54,7 @@ export default function DashboardContent({
       <section className="my-4 grid grid-cols-2">
         <div className="col-start-1 col-span-1 border-[1px] border-[#CCDBDC] rounded-lg p-3">
           <h5 className="mb-2 font-bold text-deep-blue">
-            {type === 'MOST_CONSUMED'
+            {barlist === 'MOST_CONSUMED'
               ? 'Top 5 más consumidos'
               : 'Top 5 más ingresados'}
           </h5>

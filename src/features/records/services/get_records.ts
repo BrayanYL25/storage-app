@@ -13,9 +13,11 @@ export default async function getRecords({ endpoint }: { endpoint: string }) {
 
     return records.map((record: any): Record => {
       return {
-        id: record.Id,
-        product: record.Producto,
+        recordId: record.Id,
+        productId: record.ProductoId,
+        productName: record.Producto,
         quantity: record.Cantidad,
+        unitId: record.UnitId,
         unit: record.Volumen,
         type: record.Tipo,
         email: record.Email,

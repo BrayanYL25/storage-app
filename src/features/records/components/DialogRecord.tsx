@@ -13,6 +13,7 @@ import Overlay from '@/components/Overlay.tsx'
 import { Toaster } from '@/components/Toaster.tsx'
 import { ToastProps } from '@/components/Toast.tsx'
 import { RECORD_ENDPOINTS } from '@/services/endpoints.ts'
+import { Badge } from '@/components/Badge.tsx'
 
 interface FormError {
   productError: boolean
@@ -60,7 +61,7 @@ export default function DialogRecord({
     return isValid
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const user = JSON.parse(localStorage.getItem('user') as string)
@@ -69,30 +70,32 @@ export default function DialogRecord({
     const canAdd = validateForm(user, quantity)
     if (!canAdd) return
 
-    createRecord(RECORD_ENDPOINTS[type], {
-      product_id: product!.id,
-      user_id: user.id,
-      record_quantity: Number(quantity),
-      record_date: format(date ?? new Date(), 'yyyy-MM-dd')
-    })
-      .then(({ newRecord }) => {
-        setToast({
-          title: '✅',
-          description: `${quantity} ${newRecord.unitName} de ${newRecord.productName} fueron registrados`,
-          variant: 'success',
-          duration: 2000
-        })
-      })
-      .catch(() => {
-        setToast({
-          title: '❌',
-          description: `Ha habido un error`,
-          variant: 'error'
-        })
+    try {
+      const { newRecord } = await createRecord(RECORD_ENDPOINTS[type], {
+        productId: product!.id,
+        userId: user.id,
+        quantity: Number(quantity),
+        date: format(date ?? new Date(), 'yyyy-MM-dd')
       })
 
-    fetchRecords(type)
-    closeDialog()
+      setToast({
+        title: '✅',
+        description: `${quantity} ${newRecord.unitName} de ${newRecord.productName} fueron registrados`,
+        variant: 'success',
+        duration: 2000
+      })
+
+      fetchRecords(type)
+      closeDialog()
+    } catch (e) {
+      console.error(e)
+      setToast({
+        title: '❌',
+        description: `Ha habido un error`,
+        variant: 'error',
+        duration: 8000
+      })
+    }
   }
   return (
     <>
@@ -117,37 +120,38 @@ export default function DialogRecord({
             hasError={errors.productError}
           />
 
-          <Label
-            htmlFor="quantity"
-            className="text-[#003249] text-base font-semibold mt-3"
-          >
-            Cantidad
-          </Label>
-          {errors.quantityError && (
-            <span className="w-full px-2 py-1 rounded-md text-[#F95454] font-semibold">
-              La cantidad no puede ser 0
-            </span>
-          )}
+          <div className="my-2 flex items-center gap-2">
+            <Label
+              htmlFor="quantity"
+              className="text-[#003249] text-base font-semibold"
+            >
+              Cantidad
+            </Label>
+            {errors.quantityError && (
+              <Badge variant="error">Falta la cantidad</Badge>
+            )}
+          </div>
+
           <Input
             placeholder="Escribe..."
             id="quantity"
             name="quantity"
             type="number"
-            step={product?.unitId === 2 ? '1' : '0.01'}
+            step={product?.unitId === 2 ? '1' : '0.1'}
             className="mb-3"
-            required
           />
 
-          {errors.quantityError && (
-            <span className="text-[#F95454] font-semibold">Error</span>
-          )}
-
-          <Label
-            htmlFor="date"
-            className="text-[#003249] text-base font-semibold"
-          >
-            Fecha
-          </Label>
+          <div className="my-2 flex items-center gap-2">
+            <Label
+              htmlFor="date"
+              className="text-[#003249] text-base font-semibold"
+            >
+              Fecha
+            </Label>
+            {errors.quantityError && (
+              <Badge variant="error">Seleccionar fecha</Badge>
+            )}
+          </div>
           <DatePicker
             value={date}
             onChange={setDate}
