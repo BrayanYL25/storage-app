@@ -73,8 +73,13 @@ export default function NavigationHeader() {
             <Popover>
               <PopoverTrigger asChild>
                 {/* <Button variant="primary">Open</Button> */}
-                <button type="button" aria-label="open settings">
+                <button
+                  type="button"
+                  aria-label="open settings"
+                  className="flex gap-2 text-deep-blue text-sm font-semibold"
+                >
                   <SettingsIcon />
+                  Ajustes
                 </button>
               </PopoverTrigger>
               <PopoverContent className="p-0 ml-4">

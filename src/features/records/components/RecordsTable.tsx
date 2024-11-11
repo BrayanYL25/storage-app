@@ -65,6 +65,7 @@ export function RecordsTable({
       )}
       {editDialogState.open && (
         <EditDialogRecord
+          setClose={setEditDialogState}
           recordId={editDialogState.recordId}
           productId={editDialogState.productId}
           unitId={editDialogState.unitId}
@@ -126,11 +127,12 @@ export function RecordsTable({
                     <TableCell className="text-right font-semibold">
                       {item.date}
                     </TableCell>
-                    <TableCell
-                      className="flex justify-center gap-4"
-                      onClick={() => handleEdit(item)}
-                    >
-                      <button type="button" aria-label="Editar Registro">
+                    <TableCell className="flex justify-center gap-4">
+                      <button
+                        type="button"
+                        aria-label="Editar Registro"
+                        onClick={() => handleEdit(item)}
+                      >
                         <EditIcon />
                       </button>
                       <button

@@ -5,6 +5,7 @@ import deleteRecord from '../services/delete_record'
 import useRecordsStore from '../store/useRecordsStore'
 import { Toaster } from '@/components/Toaster'
 import { useToast } from '@/lib/useToast'
+import { NullError } from '@/lib/errorFactory'
 
 export default function DeleteRecordDialog({
   id,
@@ -18,25 +19,42 @@ export default function DeleteRecordDialog({
   const { fetchRecords } = useRecordsStore()
   const { toast } = useToast()
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (id !== null) {
-      deleteRecord({ id }).then((msg) => {
-        console.info(msg)
-        set({
-          id: null,
-          isOpen: false
-        })
+    try {
+      if (id === null) {
+        throw new NullError('El codigo no puede ser nulo')
+      }
 
-        fetchRecords(type).then(() => {
-          toast({
-            title: 'Info',
-            description: 'El registro fue borrado exitosamente',
-            variant: 'info',
-            duration: 3000
-          })
-        })
+      await deleteRecord({ id })
+      set({
+        id: null,
+        isOpen: false
       })
+
+      await fetchRecords(type)
+      toast({
+        title: 'Info',
+        description: 'El registro fue borrado exitosamente',
+        variant: 'info',
+        duration: 3000
+      })
+    } catch (e) {
+      if (e instanceof NullError) {
+        toast({
+          title: 'Error',
+          description: e.message,
+          variant: 'error',
+          duration: 3000
+        })
+      } else {
+        toast({
+          title: 'Error',
+          description: 'Hubo un error desconocido borrando el registro',
+          variant: 'error',
+          duration: 3000
+        })
+      }
     }
   }
   return (

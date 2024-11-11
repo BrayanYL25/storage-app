@@ -1,4 +1,5 @@
 import { RecordRequest } from 'src/types'
+import { ErrorCreatingRecord, UnknownOriginError } from '@/lib/errorFactory.ts'
 
 export default async function createRecord(
   endpoint: string,
@@ -20,13 +21,19 @@ export default async function createRecord(
     })
 
     if (!response.ok) {
-      throw new Error('Hubo un error creando el registro')
+      throw new ErrorCreatingRecord('Hubo un error creando el registro')
     }
     const recordCreated = await response.json()
 
     return { newRecord: recordCreated }
   } catch (e) {
-    console.log(e)
-    throw e
+    if (e instanceof ErrorCreatingRecord) {
+      console.log(e.message)
+      throw e
+    } else {
+      throw new UnknownOriginError(
+        'No hemos podido encontrar el origen del error'
+      )
+    }
   }
 }
