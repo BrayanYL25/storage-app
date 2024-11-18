@@ -20,6 +20,10 @@ export type EdittedRecord = Required<
   open: boolean
 }
 
+export type UpdateRecordRequest = Required<
+  Pick<Record, 'recordId' | 'userId' | 'productId' | 'quantity' | 'date'>
+>
+
 export type RecordRequest = Required<
   Pick<Record, 'userId' | 'productId' | 'quantity' | 'date'>
 >

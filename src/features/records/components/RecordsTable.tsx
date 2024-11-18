@@ -66,6 +66,7 @@ export function RecordsTable({
       {editDialogState.open && (
         <EditDialogRecord
           setClose={setEditDialogState}
+          type={type}
           recordId={editDialogState.recordId}
           productId={editDialogState.productId}
           unitId={editDialogState.unitId}

@@ -5,8 +5,11 @@ import Overlay from '@/components/Overlay'
 import { Toaster } from '@/components/Toaster'
 import { Badge } from '@/components/Badge.tsx'
 import { Dispatch, FormEvent, useState } from 'react'
-import { EdittedRecord } from 'src/types'
+import { EdittedRecord, TypeRecord } from 'src/types'
 import { CloseIcon } from '@/components/Icons'
+import updateRecord from '../services/update_record'
+import { useToast } from '@/lib/useToast'
+import useRecordsStore from '../store/useRecordsStore'
 
 const convertDate = (stringDate: string): Date => {
   return new Date(stringDate)
@@ -26,7 +29,8 @@ export default function EditDialogRecord({
   unitId,
   productName,
   recordQuantity,
-  recordDate
+  recordDate,
+  type
 }: {
   setClose: Dispatch<React.SetStateAction<EdittedRecord>>
   recordId: number
@@ -35,6 +39,7 @@ export default function EditDialogRecord({
   productName: string
   recordQuantity: number
   recordDate: string
+  type: TypeRecord
 }) {
   const [date, setDate] = useState<Date | undefined>(convertDate(recordDate))
   const [formErrors, setFormErrors] = useState<FormError>({
@@ -43,6 +48,8 @@ export default function EditDialogRecord({
     dateError: false,
     userError: false
   })
+  const { fetchRecords } = useRecordsStore()
+  const { toast } = useToast()
 
   const close = () => {
     setClose(() => ({
@@ -60,10 +67,11 @@ export default function EditDialogRecord({
     setFormErrors((prevErrors) => ({ ...prevErrors, [field]: isError }))
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const parsedQuantity = Number(formData.get('quantity'))
+    const user = JSON.parse(localStorage.getItem('user') ?? '')
     if (parsedQuantity <= 0) {
       setFieldError('quantityError', true)
       return
@@ -72,8 +80,47 @@ export default function EditDialogRecord({
       setFieldError('dateError', true)
       return
     }
+    if (user.id == null) {
+      setFieldError('userError', true)
+      return
+    }
 
-    console.log(parsedQuantity, date.toISOString().split('T')[0])
+    try {
+      const { edittedRecord } = await updateRecord({
+        record: {
+          recordId,
+          productId,
+          userId: user.id,
+          quantity: parsedQuantity,
+          date: date.toISOString().split('T')[0]
+        }
+      })
+      // console.log('Breakpoint 0')
+
+      // if (!edittedRecord) {
+      //   throw new Error('No se actualizo nada')
+      // }
+
+      console.log('Breakpoint 1')
+      await fetchRecords(type)
+
+      console.log('Breakpoint 2')
+      toast({
+        title: '✅',
+        description: `${recordQuantity} ${edittedRecord.unitName} de ${edittedRecord.productName} fueron actualizados`,
+        variant: 'success',
+        duration: 2000
+      })
+      close()
+    } catch (e) {
+      console.error(e)
+      toast({
+        title: '❌',
+        description: `Ha habido un error`,
+        variant: 'error',
+        duration: 8000
+      })
+    }
   }
 
   return (
