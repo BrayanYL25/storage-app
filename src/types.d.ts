@@ -48,6 +48,15 @@ export interface Product {
   unitName?: string
 }
 
+export interface Units {
+  unitId: number
+  unitName: string
+}
+
+export type CreateProductRequest = Required<Pick<Product, 'name' | 'stock'>> & {
+  volume: number
+}
+
 export type Month =
   | 'Enero'
   | 'Febrero'

@@ -1,4 +1,5 @@
 import { Badge } from '@/components/Badge'
+import { EditIcon } from '@/components/Icons'
 import {
   Table,
   TableBody,
@@ -30,6 +31,7 @@ export default function ProductsTable({
               <TableHeaderCell>Producto</TableHeaderCell>
               <TableHeaderCell>Cantidad</TableHeaderCell>
               <TableHeaderCell>Tipo</TableHeaderCell>
+              <TableHeaderCell>Acciones</TableHeaderCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -40,6 +42,11 @@ export default function ProductsTable({
                 <TableCell>{item.stock}</TableCell>
                 <TableCell>
                   <Badge variant="default">{item.unitName}</Badge>
+                </TableCell>
+                <TableCell>
+                  <button type="button" aria-label="Edit button">
+                    <EditIcon />
+                  </button>
                 </TableCell>
               </TableRow>
             ))}

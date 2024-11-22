@@ -25,9 +25,9 @@ export default async function updateRecord({
       }
     )
 
-    console.log(response.ok)
     if (!response.ok) {
-      throw new ErrorEditingRecord('Hubo un error editando el registro')
+      const { msg } = await response.json()
+      throw new ErrorEditingRecord(msg)
     }
 
     const edittedRecord = await response.json()

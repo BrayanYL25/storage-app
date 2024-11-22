@@ -3,6 +3,7 @@ import useReportStore from '../../dashboard/store/useReportStore.ts'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/Tab.tsx'
 import DownloadReport from './DownloadReport.tsx'
 import Overlay from '@/components/Overlay.tsx'
+import MailReport from './MailReport.tsx'
 
 export default function ReportDialog() {
   const { closeReportDialog } = useReportStore()
@@ -37,9 +38,7 @@ export default function ReportDialog() {
             value="tab2"
             className="space-y-2 text-sm leading-7 text-gray-600 dark:text-gray-500"
           >
-            <p className="text-xl font-semibold text-deep-blue">
-              Funcionalidad de envio por correo en proceso
-            </p>
+            <MailReport />
           </TabsContent>
         </div>
       </Tabs>

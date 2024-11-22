@@ -57,8 +57,8 @@ export default function DownloadReport() {
     getReport({ month, year }).then()
   }
   return (
-    <form onSubmit={handleSubmit}>
-      <Label className="text-[#003249] text-lg font-semibold">Mes</Label>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+      <Label className="text-[#003249] text-base font-semibold">Mes</Label>
       <Select name="month">
         <SelectTrigger>
           <SelectValue placeholder="Select" />
@@ -72,7 +72,7 @@ export default function DownloadReport() {
         </SelectContent>
       </Select>
 
-      <Label className="text-[#003249] text-lg font-semibold">Año</Label>
+      <Label className="text-[#003249] text-base font-semibold">Año</Label>
       <Select name="year">
         <SelectTrigger>
           <SelectValue placeholder="Select" />

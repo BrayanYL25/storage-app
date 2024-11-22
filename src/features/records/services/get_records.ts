@@ -1,3 +1,4 @@
+import { ErrorGettingRecords } from '@/lib/errorFactory'
 import { Record } from 'src/types'
 
 export default async function getRecords({ endpoint }: { endpoint: string }) {
@@ -6,10 +7,13 @@ export default async function getRecords({ endpoint }: { endpoint: string }) {
       credentials: 'include'
     })
 
-    if (!response.ok) {
-      throw new Error('Hubo un error en la peticion')
-    }
     const records = await response.json()
+
+    if (!response.ok) {
+      throw new ErrorGettingRecords(
+        records.msg ?? 'Hubo un error en la petitcion'
+      )
+    }
 
     return records.map((record: any): Record => {
       return {

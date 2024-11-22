@@ -26,6 +26,10 @@ const PRODUCT_ENDPOINTS = {
   PRODUCT: 'http://localhost:3000/api/product'
 }
 
+const UNITS_ENDPOINTS = {
+  ALL: 'http://localhost:3000/api/unit/all'
+}
+
 const RECORD_ENDPOINTS: RecordEndpoints = {
   ALL: 'http://localhost:3000/api/record/all',
   RECORD: 'http://localhost:3000/api/record',
@@ -41,5 +45,6 @@ export {
   REPORTS_ENPOINT,
   AUTH_ENDPOINTS,
   EXPENSES_ENPOINTS,
-  INCOMES_ENDPOINTS
+  INCOMES_ENDPOINTS,
+  UNITS_ENDPOINTS
 }

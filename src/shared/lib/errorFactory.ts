@@ -9,9 +9,14 @@ const createError: Errors = ({ name }: { name: string }) => {
   }
 }
 
+export const ErrorGettingRecords = createError({ name: 'ErrorGettingRecords' })
 export const ErrorCreatingRecord = createError({ name: 'ErrorCreatingRecord' })
 export const ErrorEditingRecord = createError({ name: 'ErrorEditingRecord' })
 export const ErrorDeletingRecord = createError({ name: 'ErrorDeletingRecord' })
+
+export const ErrorCreatingProduct = createError({
+  name: 'ErrorCreatingProduct'
+})
 
 export const UnknownOriginError = createError({ name: 'UnknownOriginError' })
 export const NullError = createError({ name: 'NullError' })
