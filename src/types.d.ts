@@ -48,6 +48,10 @@ export interface Product {
   unitName?: string
 }
 
+export type EdittedProduct = Required<Product> & {
+  open: boolean
+}
+
 export interface Units {
   unitId: number
   unitName: string
@@ -56,6 +60,10 @@ export interface Units {
 export type CreateProductRequest = Required<Pick<Product, 'name' | 'stock'>> & {
   volume: number
 }
+
+export type UpdateProductRequest = Required<
+  Pick<Product, 'id' | 'name' | 'stock' | 'unitId'>
+>
 
 export type Month =
   | 'Enero'
@@ -91,6 +99,13 @@ export interface RecordsState {
   loading: boolean
   error: string | null
   fetchRecords: (key: keyof RecordEndpoints) => Promise<void>
+}
+
+export interface ProductsStore {
+  products: Product[]
+  loading: boolean
+  error: string | null
+  findAll: () => Promise<void>
 }
 
 export interface CreateRecordDialog {

@@ -17,6 +17,12 @@ export const ErrorDeletingRecord = createError({ name: 'ErrorDeletingRecord' })
 export const ErrorCreatingProduct = createError({
   name: 'ErrorCreatingProduct'
 })
+export const ErrorUpdatingProduct = createError({
+  name: 'ErrorUpdatingProduct'
+})
+export const ErrorGettingProducts = createError({
+  name: 'ErrorGettingProducts'
+})
 
 export const UnknownOriginError = createError({ name: 'UnknownOriginError' })
 export const NullError = createError({ name: 'NullError' })

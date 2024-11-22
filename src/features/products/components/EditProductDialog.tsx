@@ -1,97 +1,72 @@
-import getUnits from '#/units/services/get_units'
 import { CloseIcon } from '@/components/Icons'
 import { Input } from '@/components/Input'
 import { Label } from '@/components/Label'
 import Overlay from '@/components/Overlay'
-import {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-  SelectValue
-} from '@/components/Select.tsx'
-import { Toaster } from '@/components/Toaster'
-import React, { Dispatch, FormEvent, useEffect, useState } from 'react'
-import { Units } from 'src/types'
-import createProduct from '../services/create_product'
+import { FormEvent } from 'react'
+import { EdittedProduct } from 'src/types'
+import updateProduct from '../services/update_product'
+import { useToast } from '@/lib/useToast'
 import productsStore from '../store/productsStore'
 
-export default function ProductDialog({
+export default function EditProductDialog({
   close,
-  toast
+  product
 }: {
-  close: Dispatch<React.SetStateAction<boolean>>
-  toast: ({ ...props }: any & { id?: string }) => void
+  close: () => void
+  product: EdittedProduct
 }) {
-  const [units, setUnits] = useState<Units[]>([])
-  const [unitId, setUnitId] = useState<number | undefined>()
+  const { toast } = useToast()
   const { findAll } = productsStore()
-
-  useEffect(() => {
-    getUnits().then(setUnits)
-  }, [])
-
-  const handleSelect = (value: string) => {
-    setUnitId(Number(value))
-  }
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const form = new FormData(event.currentTarget)
-    const name = form.get('product') as string
-    const stock = Number(form.get('stock'))
-
-    if (name === null || stock === null || unitId === undefined) {
-      return
-    }
+    const formData = new FormData(event.currentTarget)
+    const name = formData.get('product') as string
+    const stock = Number(formData.get('stock') ?? '')
+    if (!name || !stock) return
 
     try {
-      await createProduct({
-        product: {
-          name: name,
-          stock: stock,
-          volume: unitId
-        }
+      await updateProduct({
+        id: product.id,
+        name: name,
+        stock: stock,
+        unitId: product.unitId
       })
-
-      const unitName = units.find((u) => (u.unitId = unitId))
 
       toast({
         title: '✅',
-        description: `${stock} ${unitName?.unitName} ${name} fueron creados`,
+        description: `${stock} ${product.unitName} ${name} fueron actualizados`,
         variant: 'success',
         duration: 2000
       })
 
       await findAll()
-      close(false)
+      close()
     } catch (e) {
       console.error(e)
+
       toast({
         title: '❌',
         description: `Ha habido un error`,
         variant: 'error',
         duration: 8000
       })
-      close(false)
+      close()
     }
   }
   return (
     <>
-      <Toaster />
       <Overlay>
         <form
           className="w-1/2 lg:w-1/3 bg-white p-6 rounded-lg flex flex-col gap-4"
           onSubmit={handleSubmit}
         >
           <section className="flex items-center justify-between">
-            <h3 className="text-deep-blue font-bold text-xl">Nuevo Producto</h3>
+            <h3 className="text-deep-blue font-bold text-xl">
+              Editar Producto
+            </h3>
 
-            <button
-              type="button"
-              aria-label="Cerrar"
-              onClick={() => close(false)}
-            >
+            <button type="button" aria-label="Cerrar" onClick={close}>
               <CloseIcon />
             </button>
           </section>
@@ -108,6 +83,7 @@ export default function ProductDialog({
               placeholder="Ejemplo. Clorox"
               name="product"
               id="product"
+              defaultValue={product.name}
               required
             />
           </section>
@@ -115,23 +91,13 @@ export default function ProductDialog({
           <section>
             <Label
               className="text-deep-blue text-base font-semibold"
-              htmlFor="product"
+              htmlFor="unit"
             >
               Unidad de Medida
             </Label>
-
-            <Select onValueChange={handleSelect}>
-              <SelectTrigger>
-                <SelectValue placeholder="e.g. Litro" />
-              </SelectTrigger>
-              <SelectContent>
-                {units.map((unit, index) => (
-                  <SelectItem key={index} value={unit.unitId.toString()}>
-                    {unit.unitName}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <p className="relative block w-full appearance-none rounded-md border px-2.5 py-2 shadow-sm outline-none transition sm:text-sm border-gray-300">
+              {product.unitName}
+            </p>
           </section>
 
           <section>
@@ -147,6 +113,7 @@ export default function ProductDialog({
               step="0.1"
               name="stock"
               id="stock"
+              defaultValue={product.stock}
               required
             />
           </section>
@@ -155,7 +122,7 @@ export default function ProductDialog({
             type="submit"
             className="w-full bg-sky-blue mt-6 py-1 px-4 rounded-md text-white font-semibold"
           >
-            Crear
+            Editar
           </button>
         </form>
       </Overlay>

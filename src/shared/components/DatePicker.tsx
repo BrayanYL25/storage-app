@@ -18,7 +18,7 @@ import {
 } from '@react-stately/datepicker'
 import { RiCalendar2Fill, RiSubtractFill } from '@remixicon/react'
 import { format, type Locale } from 'date-fns'
-import { enUS } from 'date-fns/locale'
+import { es } from 'date-fns/locale'
 import { tv, VariantProps } from 'tailwind-variants'
 
 import { cx, focusInput, focusRing, hasErrorInput } from '@/lib/utils'
@@ -484,7 +484,7 @@ const SingleDatePicker = ({
   hasError,
   translations,
   enableYearNavigation = false,
-  locale = enUS,
+  locale = es,
   align = 'center',
   ...props
 }: SingleProps) => {
@@ -706,7 +706,7 @@ const RangeDatePicker = ({
   disableNavigation,
   disabledDays,
   enableYearNavigation = false,
-  locale = enUS,
+  locale = es,
   showTimePicker,
   placeholder = 'Select date range',
   hasError,
