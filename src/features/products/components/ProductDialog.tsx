@@ -50,7 +50,7 @@ export default function ProductDialog({
         product: {
           name: name,
           stock: stock,
-          volume: unitId
+          unitId: unitId
         }
       })
 

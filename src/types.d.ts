@@ -58,7 +58,7 @@ export interface Units {
 }
 
 export type CreateProductRequest = Required<Pick<Product, 'name' | 'stock'>> & {
-  volume: number
+  unitId: number
 }
 
 export type UpdateProductRequest = Required<

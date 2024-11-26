@@ -1,12 +1,14 @@
-import { FormEvent } from 'react'
+import { FormEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Input } from '@/components/Input.tsx'
 import { Label } from '@/components/Label.tsx'
 import signin from '../services/signin'
 import { SignInRequestFailed } from '@/lib/errorFactory'
+import { Badge } from '@/components/Badge'
 
 export default function LoginForm() {
   const routeTo = useNavigate()
+  const [error, setError] = useState<string>('')
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -20,7 +22,7 @@ export default function LoginForm() {
       routeTo('/dashboard/expenses')
     } catch (e: unknown) {
       if (e instanceof SignInRequestFailed) {
-        console.error(e.message)
+        setError(e.message)
       }
     }
   }
@@ -29,11 +31,16 @@ export default function LoginForm() {
       className="w-full md:w-1/2 lg:w-[35%] xl:w-[30%] flex flex-col rounded-lg md:border-[1px] border-[#CCDBDC] p-5 px-8"
       onSubmit={handleSubmit}
     >
-      <h1 className="text-[#003249] text-center md:text-left text-2xl mb-8 font-bold">
+      <h1 className="text-[#003249] text-center md:text-left mb-4 text-2xl font-bold">
         Iniciar Sesión
       </h1>
 
-      <Label htmlFor="email" className="text-[#003249] text-lg font-semibold">
+      {error !== '' && <Badge variant="error">{error}</Badge>}
+
+      <Label
+        htmlFor="email"
+        className="text-[#003249] mt-4 text-lg font-semibold"
+      >
         Correo electronico
       </Label>
       <Input

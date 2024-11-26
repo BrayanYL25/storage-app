@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/Popover'
 import { SettingsIcon } from '@/components/Icons'
@@ -35,9 +35,11 @@ const allRoutes: RouteLink[] = [
 
 export default function NavigationHeader() {
   const [routes, setRoutes] = useState<RouteLink[]>(allRoutes)
+  const user = useRef('')
   const location = useLocation()
 
   useEffect(() => {
+    user.current = JSON.parse(localStorage.getItem('user') ?? '')
     const getLinkStyle = (path: string) => {
       return location.pathname == `/dashboard/${path}`
         ? 'w-full px-3 py-2 bg-[#9AD1D4] bg-opacity-60 border-r-2 border-sky-blue text-sky-blue font-bold'
@@ -58,7 +60,7 @@ export default function NavigationHeader() {
     <>
       <header className="h-screen col-start-1 col-span-3 overflow-hidden pt-7 border-b-[1px] flex flex-col border-r-[1px] border-light-gray">
         <h1 className="text-deep-blue px-3 pb-4 text-3xl font-bold">
-          Inventario
+          Inventario {user.current.name}
         </h1>
         <nav className="flex flex-col">
           {routes.map(({ route, name, style }, index) => (

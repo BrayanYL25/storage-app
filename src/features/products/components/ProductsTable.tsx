@@ -52,7 +52,9 @@ export default function ProductsTable({
                 <TableHeaderCell>Producto</TableHeaderCell>
                 <TableHeaderCell>Cantidad</TableHeaderCell>
                 <TableHeaderCell>Tipo</TableHeaderCell>
-                <TableHeaderCell>Acciones</TableHeaderCell>
+                <TableHeaderCell className="text-center">
+                  Acciones
+                </TableHeaderCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -64,7 +66,7 @@ export default function ProductsTable({
                   <TableCell>
                     <Badge variant="default">{item.unitName}</Badge>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="flex justify-center">
                     <button
                       type="button"
                       aria-label="Edit button"

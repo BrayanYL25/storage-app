@@ -1,4 +1,5 @@
 import { ErrorCreatingProduct, UnknownOriginError } from '@/lib/errorFactory'
+import { PRODUCT_ENDPOINTS } from '@/services/endpoints'
 import { CreateProductRequest } from 'src/types'
 
 export default async function createProduct({
@@ -7,7 +8,7 @@ export default async function createProduct({
   product: CreateProductRequest
 }) {
   try {
-    const response = await fetch('http://localhost:3000/api/product', {
+    const response = await fetch(PRODUCT_ENDPOINTS.PRODUCT, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -15,6 +16,8 @@ export default async function createProduct({
       },
       body: JSON.stringify(product)
     })
+
+    console.log(product.name, product.stock, product.unitId)
 
     if (!response.ok) {
       const error = await response.json()

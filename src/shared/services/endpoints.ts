@@ -1,42 +1,42 @@
 import { RecordEndpoints } from 'src/types'
 
 const EXPENSES_ENPOINTS = {
-  REPORT: 'http://localhost:3000/api/report/expenses',
-  RECORD: 'http://localhost:3000/api/record/outcome'
+  REPORT: 'https://localhost:3000/api/report/expenses',
+  RECORD: 'https://localhost:3000/api/record/outcome'
 }
 
 const INCOMES_ENDPOINTS = {
-  REPORT: 'http://localhost:3000/api/report/incomes',
-  RECORD: 'http://localhost:3000/api/record/income'
+  REPORT: 'https://localhost:3000/api/report/incomes',
+  RECORD: 'https://localhost:3000/api/record/income'
 }
 
 const AUTH_ENDPOINTS = {
-  LOGIN: 'http://localhost:3000/api/user/login',
-  LOGOUT: 'http://localhost:3000/api/user/logout',
-  CHECK: 'http://localhost:3000/api/user/check',
-  REFRESH: 'http://localhost:3000/api/user/refresh'
+  LOGIN: 'https://localhost:3000/api/user/login',
+  LOGOUT: 'https://localhost:3000/api/user/logout',
+  CHECK: 'https://localhost:3000/api/user/check',
+  REFRESH: 'https://localhost:3000/api/user/refresh'
 }
 
 const REPORTS_ENPOINT = {
-  EXPENSES: 'http://localhost:3000/api/report/expenses',
-  INCOMES: 'http://localhost:3000/api/report/incomes'
+  EXPENSES: 'https://localhost:3000/api/report/expenses',
+  INCOMES: 'https://localhost:3000/api/report/incomes'
 }
 
 const PRODUCT_ENDPOINTS = {
-  PRODUCT: 'http://localhost:3000/api/product'
+  PRODUCT: 'https://localhost:3000/api/product'
 }
 
 const UNITS_ENDPOINTS = {
-  ALL: 'http://localhost:3000/api/unit/all'
+  ALL: 'https://localhost:3000/api/unit/all'
 }
 
 const RECORD_ENDPOINTS: RecordEndpoints = {
-  ALL: 'http://localhost:3000/api/record/all',
-  RECORD: 'http://localhost:3000/api/record',
-  OUTCOME: 'http://localhost:3000/api/record/outcome',
-  INCOME: 'http://localhost:3000/api/record/income',
-  MOST_CONSUMED: 'http://localhost:3000/api/record/outcome/mostconsumed',
-  MOST_ENTERED: 'http://localhost:3000/api/record/income/mostentered'
+  ALL: 'https://localhost:3000/api/record/all',
+  RECORD: 'https://localhost:3000/api/record',
+  OUTCOME: 'https://localhost:3000/api/record/outcome',
+  INCOME: 'https://localhost:3000/api/record/income',
+  MOST_CONSUMED: 'https://localhost:3000/api/record/outcome/mostconsumed',
+  MOST_ENTERED: 'https://localhost:3000/api/record/income/mostentered'
 }
 
 export {
