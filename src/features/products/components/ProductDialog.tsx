@@ -49,8 +49,8 @@ export default function ProductDialog({
       await createProduct({
         product: {
           name: name,
-          stock: stock,
-          unitId: unitId
+          stock: Number(stock),
+          unitId: Number(unitId)
         }
       })
 
@@ -125,8 +125,8 @@ export default function ProductDialog({
                 <SelectValue placeholder="e.g. Litro" />
               </SelectTrigger>
               <SelectContent>
-                {units.map((unit, index) => (
-                  <SelectItem key={index} value={unit.unitId.toString()}>
+                {units.map((unit) => (
+                  <SelectItem key={unit.unitId} value={unit.unitId.toString()}>
                     {unit.unitName}
                   </SelectItem>
                 ))}

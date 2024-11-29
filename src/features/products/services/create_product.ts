@@ -17,8 +17,6 @@ export default async function createProduct({
       body: JSON.stringify(product)
     })
 
-    console.log(product.name, product.stock, product.unitId)
-
     if (!response.ok) {
       const error = await response.json()
       throw new ErrorCreatingProduct(
