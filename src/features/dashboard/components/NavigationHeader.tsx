@@ -35,7 +35,7 @@ const allRoutes: RouteLink[] = [
 
 export default function NavigationHeader() {
   const [routes, setRoutes] = useState<RouteLink[]>(allRoutes)
-  const user = useRef('')
+  const user = useRef({ name: '' })
   const location = useLocation()
 
   useEffect(() => {

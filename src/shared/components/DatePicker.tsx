@@ -554,7 +554,8 @@ const SingleDatePicker = ({
     setDate(newDate)
   }
 
-  const onTimeChange = (time: TimeValue) => {
+  const onTimeChange = (time: TimeValue | null) => {
+    if (time == null) return
     setTime(time)
 
     if (!date) {
@@ -804,7 +805,8 @@ const RangeDatePicker = ({
     setOpen(open)
   }
 
-  const onTimeChange = (time: TimeValue, pos: 'start' | 'end') => {
+  const onTimeChange = (time: TimeValue | null, pos: 'start' | 'end') => {
+    if (time == null) return
     switch (pos) {
       case 'start':
         setStartTime(time)
