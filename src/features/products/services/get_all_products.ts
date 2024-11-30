@@ -13,7 +13,6 @@ export default async function getAllProducts() {
       throw new ErrorGettingProducts(`Hubo un error ${error.msg}`)
     }
     const products = await response.json()
-    console.log(products)
     const mappedProducts: Product[] = products.map(
       (product: any): Product => ({
         id: product.productId,
