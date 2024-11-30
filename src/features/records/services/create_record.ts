@@ -6,6 +6,7 @@ export default async function createRecord(
   record: RecordRequest
 ) {
   try {
+    console.log(endpoint)
     const response = await fetch(endpoint, {
       method: 'POST',
       credentials: 'include',

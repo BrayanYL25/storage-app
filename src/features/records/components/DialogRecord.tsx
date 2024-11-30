@@ -160,11 +160,11 @@ export default function DialogRecord({
           />
 
           {errors.dateError && (
-            <span className="text-[#F95454] font-semibold">Error</span>
+            <span className="text-[#F95454] font-semibold">Date error</span>
           )}
 
           {errors.userError && (
-            <span className="text-[#F95454] font-semibold">Error</span>
+            <span className="text-[#F95454] font-semibold">User Error</span>
           )}
           <button
             type="submit"
