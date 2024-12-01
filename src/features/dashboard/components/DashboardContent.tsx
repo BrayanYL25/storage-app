@@ -1,22 +1,24 @@
 import { LastTwoKeys, TypeRecord } from 'src/types'
-import ReportDialog from '#/report/components/ReportDialog'
 import useRecordsStore from '#/records/store/useRecordsStore.ts'
 import { useCreateRecordDialog } from '#/records/store/dialog.ts'
 import { RecordsTable } from '#/records/components/RecordsTable.tsx'
-import DialogRecord from '#/records/components/DialogRecord.tsx'
 import { Toaster } from '@/components/Toaster'
 import { toast } from '@/lib/useToast'
 import { ToastProps } from '@/components/Toast.tsx'
 import Controls from './Controls'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import useReportStore from '../store/useReportStore'
 import getMostRecord from '../services/get_most_record.ts'
 import { BarList } from '@/components/BarList.tsx'
+import OverlayLoader from '@/components/OverlayLoader.tsx'
 
 type barlistData = {
   name: string
   value: number
 }
+
+const RecordDialog = lazy(() => import('#/records/components/DialogRecord.tsx'))
+const ReportDialog = lazy(() => import('#/report/components/ReportDialog.tsx'))
 
 export default function DashboardContent({
   titleContent,
@@ -49,6 +51,16 @@ export default function DashboardContent({
   }, [toastInfo])
   return (
     <main className="col-start-4 col-span-9 overflow-y-scroll px-9 pt-6">
+      {stateRecordDialog && (
+        <Suspense fallback={<OverlayLoader />}>
+          <RecordDialog type={type} setToast={setToastInfo} />
+        </Suspense>
+      )}
+      {stateReportDialog && (
+        <Suspense fallback={<OverlayLoader />}>
+          <ReportDialog />
+        </Suspense>
+      )}
       <Controls />
       <Toaster />
       <section className="my-4 grid grid-cols-2">
@@ -69,10 +81,6 @@ export default function DashboardContent({
         errorMessage={error}
         type={type}
       />
-      {stateRecordDialog && (
-        <DialogRecord type={type} setToast={setToastInfo} />
-      )}
-      {stateReportDialog && <ReportDialog />}
     </main>
   )
 }
