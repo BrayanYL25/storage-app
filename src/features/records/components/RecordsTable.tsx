@@ -10,9 +10,11 @@ import {
   TableRow
 } from '@/components/Table'
 import { dialog, EdittedRecord, Record, TypeRecord } from 'src/types'
-import { useState } from 'react'
-import DeleteRecordDialog from './DeleteRecordDialog'
-import EditDialogRecord from './EditDialogRecord'
+import { lazy, Suspense, useState } from 'react'
+import OverlayLoader from '@/components/OverlayLoader'
+
+const DeleteRecordDialog = lazy(() => import('./DeleteRecordDialog.tsx'))
+const EditDialogRecord = lazy(() => import('./EditDialogRecord'))
 
 export function RecordsTable({
   data,
@@ -57,23 +59,27 @@ export function RecordsTable({
   return (
     <>
       {deleteDialogState.isOpen && (
-        <DeleteRecordDialog
-          id={deleteDialogState.id}
-          type={type}
-          set={setDeleteDialogState}
-        />
+        <Suspense fallback={<OverlayLoader />}>
+          <DeleteRecordDialog
+            id={deleteDialogState.id}
+            type={type}
+            set={setDeleteDialogState}
+          />
+        </Suspense>
       )}
       {editDialogState.open && (
-        <EditDialogRecord
-          setClose={setEditDialogState}
-          type={type}
-          recordId={editDialogState.recordId}
-          productId={editDialogState.productId}
-          unitId={editDialogState.unitId}
-          productName={editDialogState.productName}
-          recordQuantity={editDialogState.quantity}
-          recordDate={editDialogState.date}
-        />
+        <Suspense fallback={<OverlayLoader />}>
+          <EditDialogRecord
+            setClose={setEditDialogState}
+            type={type}
+            recordId={editDialogState.recordId}
+            productId={editDialogState.productId}
+            unitId={editDialogState.unitId}
+            productName={editDialogState.productName}
+            recordQuantity={editDialogState.quantity}
+            recordDate={editDialogState.date}
+          />
+        </Suspense>
       )}
       <section className="p-6 border-[1px] border-light-gray rounded-xl my-8">
         <div>

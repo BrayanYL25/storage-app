@@ -20,6 +20,5 @@ export default defineConfig({
       { find: '@', replacement: resolve(__dirname, 'src/shared') },
       { find: '#', replacement: resolve(__dirname, 'src/features') }
     ]
-  },
-  base: '/storage-app/'
+  }
 })
