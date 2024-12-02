@@ -88,6 +88,9 @@ export default {
         'soft-teal': '#9AD1D4',
         'light-gray': '#CCDBDC',
       },
+      screens: {
+        '3xl': '2030px'
+      }
     },
   },
   plugins: [require("@tailwindcss/forms")],

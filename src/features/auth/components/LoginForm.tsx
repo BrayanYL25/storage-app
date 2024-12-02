@@ -28,7 +28,7 @@ export default function LoginForm() {
   }
   return (
     <form
-      className="w-full md:w-1/2 lg:w-[35%] xl:w-[30%] flex flex-col rounded-lg md:border-[1px] border-[#CCDBDC] p-5 px-8"
+      className="w-full md:w-1/2 lg:w-[35%] xl:w-[30%] 2xl:w-3/12 3xl:w-2/12 flex flex-col rounded-lg md:border-[1px] border-[#CCDBDC] p-5 px-8"
       onSubmit={handleSubmit}
     >
       <h1 className="text-[#003249] text-center md:text-left mb-4 text-2xl font-bold">
@@ -71,7 +71,7 @@ export default function LoginForm() {
         type="submit"
         className="bg-[#007EA7] text-white font-bold rounded-md py-1"
       >
-        Enviar
+        Iniciar Sesion
       </button>
       <Link
         to="/signup"
