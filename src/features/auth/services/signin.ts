@@ -18,7 +18,6 @@ export default async function signin({
   })
   const user = await response.json()
 
-  console.log(user.msg)
   if (!response.ok) {
     throw new SignInRequestFailed(
       user.msg === 'Password wrong'
