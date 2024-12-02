@@ -239,3 +239,33 @@ export const DeleteIcon = () => {
     </svg>
   )
 }
+
+export const BackIcon = () => {
+  return (
+    <svg
+      width="25"
+      height="25"
+      viewBox="0 0 25 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <mask
+        id="mask0_107_94"
+        style={{ maskType: 'alpha' }}
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+        width="25"
+        height="25"
+      >
+        <rect width="25" height="25" fill="#D9D9D9" />
+      </mask>
+      <g mask="url(#mask0_107_94)">
+        <path
+          d="M8.15088 13.5417L13.9842 19.375L12.4998 20.8333L4.1665 12.5L12.4998 4.16666L13.9842 5.62499L8.15088 11.4583H20.8332V13.5417H8.15088Z"
+          fill="white"
+        />
+      </g>
+    </svg>
+  )
+}

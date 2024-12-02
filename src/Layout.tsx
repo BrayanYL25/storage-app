@@ -7,14 +7,17 @@ import Dashboard from './features/dashboard/pages/Dashboard'
 import Expenses from './features/dashboard/pages/Expenses'
 import Incomes from './features/dashboard/pages/Incomes'
 import Products from './features/dashboard/pages/Products'
+import NotFoundError from '@/pages/NotFoundError'
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <SignIn />
+    element: <SignIn />,
+    errorElement: <NotFoundError safePath="/" />
   },
   {
     path: '/signup',
-    element: <SignUp />
+    element: <SignUp />,
+    errorElement: <NotFoundError safePath="/signup" />
   },
   {
     path: '/dashboard',
