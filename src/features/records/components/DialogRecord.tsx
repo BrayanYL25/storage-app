@@ -3,7 +3,6 @@ import { Input } from '@/components/Input'
 import { CloseIcon } from '@/components/Icons'
 import { DatePicker } from '@/components/DatePicker'
 import { Badge } from '@/components/Badge.tsx'
-import Overlay from '@/components/Overlay.tsx'
 import { ToastProps } from '@/components/Toast.tsx'
 import { Toaster } from '@/components/Toaster.tsx'
 import { RECORD_ENDPOINTS } from '@/services/endpoints.ts'
@@ -14,6 +13,7 @@ import createRecord from '../services/create_record'
 import { Product, TypeRecord } from 'src/types'
 import { format } from 'date-fns'
 import useRecordsStore from '../store/useRecordsStore.ts'
+import FormDialog from '@/components/FormDialog.tsx'
 
 interface FormError {
   productError: boolean
@@ -100,80 +100,72 @@ export default function DialogRecord({
   return (
     <>
       <Toaster />
-      <Overlay>
-        <form
-          className="w-1/2 lg:w-1/3 bg-white p-6 rounded-lg"
-          onSubmit={handleSubmit}
-        >
-          <section className="flex items-center justify-between">
-            <h3 className="text-deep-blue font-bold text-xl mb-4">
-              Nuevo Registro
-            </h3>
+      <FormDialog submit={handleSubmit}>
+        <section className="flex items-center justify-between">
+          <h3 className="text-deep-blue font-bold text-xl mb-4">
+            Nuevo Registro
+          </h3>
 
-            <button type="button" onClick={closeDialog} aria-label="Cerrar">
-              <CloseIcon />
-            </button>
-          </section>
-
-          <ProductSelect
-            setProduct={setProduct}
-            hasError={errors.productError}
-          />
-
-          <div className="my-2 flex items-center gap-2">
-            <Label
-              htmlFor="quantity"
-              className="text-[#003249] text-base font-semibold"
-            >
-              Cantidad
-            </Label>
-            {errors.quantityError && (
-              <Badge variant="error">Falta la cantidad</Badge>
-            )}
-          </div>
-
-          <Input
-            placeholder="Escribe..."
-            id="quantity"
-            name="quantity"
-            type="number"
-            step={product?.unitId === 2 ? '1' : '0.1'}
-            className="mb-3"
-          />
-
-          <div className="my-2 flex items-center gap-2">
-            <Label
-              htmlFor="date"
-              className="text-[#003249] text-base font-semibold"
-            >
-              Fecha
-            </Label>
-            {errors.quantityError && (
-              <Badge variant="error">Seleccionar fecha</Badge>
-            )}
-          </div>
-          <DatePicker
-            value={date}
-            onChange={setDate}
-            className="w-full"
-            id="date"
-          />
-
-          {errors.dateError && (
-            <span className="text-[#F95454] font-semibold">Date error</span>
-          )}
-
-          {errors.userError && (
-            <span className="text-[#F95454] font-semibold">User Error</span>
-          )}
-          <button
-            type="submit"
-            className="w-full bg-sky-blue mt-6 py-1 px-4 rounded-md text-white font-semibold"
-          >
-            {type === 'OUTCOME' ? 'Registrar Consumo' : 'Registrar Ingreso'}
+          <button type="button" onClick={closeDialog} aria-label="Cerrar">
+            <CloseIcon />
           </button>
-        </form>
-      </Overlay>
+        </section>
+
+        <ProductSelect setProduct={setProduct} hasError={errors.productError} />
+
+        <div className="my-2 flex items-center gap-2">
+          <Label
+            htmlFor="quantity"
+            className="text-[#003249] text-base font-semibold"
+          >
+            Cantidad
+          </Label>
+          {errors.quantityError && (
+            <Badge variant="error">Falta la cantidad</Badge>
+          )}
+        </div>
+
+        <Input
+          placeholder="Escribe..."
+          id="quantity"
+          name="quantity"
+          type="number"
+          step={product?.unitId === 2 ? '1' : '0.1'}
+          className="mb-3"
+        />
+
+        <div className="my-2 flex items-center gap-2">
+          <Label
+            htmlFor="date"
+            className="text-[#003249] text-base font-semibold"
+          >
+            Fecha
+          </Label>
+          {errors.quantityError && (
+            <Badge variant="error">Seleccionar fecha</Badge>
+          )}
+        </div>
+        <DatePicker
+          value={date}
+          onChange={setDate}
+          className="w-full"
+          id="date"
+        />
+
+        {errors.dateError && (
+          <span className="text-[#F95454] font-semibold">Date error</span>
+        )}
+
+        {errors.userError && (
+          <span className="text-[#F95454] font-semibold">User Error</span>
+        )}
+        <button
+          type="submit"
+          className="w-full bg-sky-blue mt-6 py-1 px-4 rounded-md text-white font-semibold"
+        >
+          {type === 'OUTCOME' ? 'Registrar Consumo' : 'Registrar Ingreso'}
+        </button>
+      </FormDialog>
     </>
   )
 }
