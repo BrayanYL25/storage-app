@@ -5,10 +5,12 @@ import { Label } from '@/components/Label.tsx'
 import signin from '../services/signin'
 import { SignInRequestFailed } from '@/lib/errorFactory'
 import { Badge } from '@/components/Badge'
+import { LoaderIcon } from '@/components/Icons'
 
 export default function LoginForm() {
   const routeTo = useNavigate()
   const [error, setError] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -17,10 +19,12 @@ export default function LoginForm() {
     const password = data.get('password') as string
 
     try {
+      setLoading(true)
       const response = await signin({ email, password })
       localStorage.setItem('user', JSON.stringify(response))
       routeTo('/dashboard/expenses')
     } catch (e: unknown) {
+      setLoading(false)
       if (e instanceof SignInRequestFailed) {
         setError(e.message)
       }
@@ -69,9 +73,9 @@ export default function LoginForm() {
 
       <button
         type="submit"
-        className="bg-[#007EA7] text-white font-bold rounded-md py-1"
+        className="bg-[#007EA7] text-white font-bold rounded-md py-1 flex justify-center"
       >
-        Iniciar Sesion
+        {loading ? <LoaderIcon /> : 'Iniciar Sesion'}
       </button>
       <Link
         to="/signup"

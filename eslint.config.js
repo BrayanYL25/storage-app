@@ -37,7 +37,7 @@ export default tseslint.config(
           singleQuote: true,
           trailingComma: 'none'
         }
-      ]
+      ],
     },
   },
   eslintConfigPrettier
