@@ -100,11 +100,11 @@ export function RecordsTable({
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableHeaderCell>#</TableHeaderCell>
-                  <TableHeaderCell>Producto</TableHeaderCell>
-                  <TableHeaderCell>Cantidad</TableHeaderCell>
+                  {/* <TableHeaderCell>#</TableHeaderCell> */}
                   <TableHeaderCell>Tipo</TableHeaderCell>
-                  <TableHeaderCell>Unidad</TableHeaderCell>
+                  <TableHeaderCell>Cantidad</TableHeaderCell>
+                  {/* <TableHeaderCell>Unidad</TableHeaderCell> */}
+                  <TableHeaderCell>Producto</TableHeaderCell>
                   <TableHeaderCell>Correo</TableHeaderCell>
                   <TableHeaderCell className="text-right">
                     Fecha
@@ -115,11 +115,9 @@ export function RecordsTable({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data?.map((item, index) => (
+                {data?.map((item) => (
                   <TableRow key={item.recordId}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell>{item.productName}</TableCell>
-                    <TableCell>{item.quantity}</TableCell>
+                    {/* <TableCell>{index + 1}</TableCell> */}
                     <TableCell>
                       <Badge
                         variant={item.type === 'SALIDA' ? 'error' : 'success'}
@@ -127,7 +125,12 @@ export function RecordsTable({
                         {item.type}
                       </Badge>
                     </TableCell>
-                    <TableCell>{item.unit}</TableCell>
+                    <TableCell>
+                      {item.quantity}{' '}
+                      {item.quantity > 1 ? `${item.unit}s` : item.unit}
+                    </TableCell>
+                    {/* <TableCell>{item.unit}</TableCell> */}
+                    <TableCell>{item.productName}</TableCell>
                     <TableCell>
                       <Badge variant="default">{item.email}</Badge>
                     </TableCell>

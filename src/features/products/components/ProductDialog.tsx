@@ -1,5 +1,5 @@
 import getUnits from '#/units/services/get_units'
-import { CloseIcon } from '@/components/Icons'
+import { CloseIcon, LoaderIcon } from '@/components/Icons'
 import { Input } from '@/components/Input'
 import { Label } from '@/components/Label'
 import Overlay from '@/components/Overlay'
@@ -25,6 +25,7 @@ export default function ProductDialog({
 }) {
   const [units, setUnits] = useState<Units[]>([])
   const [unitId, setUnitId] = useState<number | undefined>()
+  const [loading, setLoading] = useState<boolean>(false)
   const { findAll } = productsStore()
 
   useEffect(() => {
@@ -53,6 +54,8 @@ export default function ProductDialog({
           unitId: Number(unitId)
         }
       })
+
+      setLoading(true)
 
       const unitName = units.find((u) => (u.unitId = unitId))
 
@@ -155,7 +158,7 @@ export default function ProductDialog({
             type="submit"
             className="w-full bg-sky-blue mt-6 py-1 px-4 rounded-md text-white font-semibold"
           >
-            Crear
+            {loading ? <LoaderIcon /> : 'Crear'}
           </button>
         </form>
       </Overlay>
