@@ -1,8 +1,8 @@
-import { CloseIcon } from '@/components/Icons'
+import { CloseIcon, LoaderIcon } from '@/components/Icons'
 import { Input } from '@/components/Input'
 import { Label } from '@/components/Label'
 import Overlay from '@/components/Overlay'
-import { FormEvent } from 'react'
+import { FormEvent, useState } from 'react'
 import { EdittedProduct } from 'src/types'
 import updateProduct from '../services/update_product'
 import { useToast } from '@/lib/useToast'
@@ -17,13 +17,14 @@ export default function EditProductDialog({
 }) {
   const { toast } = useToast()
   const { findAll } = productsStore()
+  const [loading, setLoading] = useState<boolean>(false)
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const name = formData.get('product') as string
     const stock = Number(formData.get('stock') ?? '')
-    if (!name || !stock) return
+    if (!name || stock < 0) return
 
     try {
       await updateProduct({
@@ -32,6 +33,7 @@ export default function EditProductDialog({
         stock: stock,
         unitId: product.unitId
       })
+      setLoading(true)
 
       toast({
         title: '✅',
@@ -122,7 +124,7 @@ export default function EditProductDialog({
             type="submit"
             className="w-full bg-sky-blue mt-6 py-1 px-4 rounded-md text-white font-semibold"
           >
-            Editar
+            {loading ? <LoaderIcon /> : 'Editar'}
           </button>
         </form>
       </Overlay>

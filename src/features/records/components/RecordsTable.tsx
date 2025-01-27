@@ -127,7 +127,9 @@ export function RecordsTable({
                     </TableCell>
                     <TableCell>
                       {item.quantity}{' '}
-                      {item.quantity > 1 ? `${item.unit}s` : item.unit}
+                      {item.quantity > 1 && item.unit !== 'Unidades'
+                        ? `${item.unit}s`
+                        : item.unit}
                     </TableCell>
                     {/* <TableCell>{item.unit}</TableCell> */}
                     <TableCell>{item.productName}</TableCell>
